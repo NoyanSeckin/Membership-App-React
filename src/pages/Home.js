@@ -1,7 +1,7 @@
 import {Container, Box, Button, Grid, Paper, Typography} from '@mui/material'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AddIcon from '@mui/icons-material/Add';
-
+import {Link} from 'react-router-dom'
 import React from 'react'
 
 const paperStyle = {
@@ -10,7 +10,13 @@ const paperStyle = {
   minWidth: '300px',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  transition: '500ms ease-in-out',
+  '&:hover': {
+    px: 1.5,
+    py: 1.5,
+    cursor: 'pointer',
+  }
 }
 
 const gridItemStyle = {
@@ -32,9 +38,11 @@ export default function Home() {
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Mevcut Üyeleri Gör
         </Typography>
-        <Paper sx={{...paperStyle, bgcolor: 'primary.main'}}>
+        <Link to='/members'>
+        <Paper elevation={7} sx={{...paperStyle, bgcolor: 'primary.main'}}>
           <SupervisorAccountIcon sx={iconStyle}/>
         </Paper>
+        </Link>
       </Grid>
     )
   }
@@ -45,9 +53,11 @@ export default function Home() {
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Yeni Üye Ekle
         </Typography>
-        <Paper sx={{...paperStyle, bgcolor: 'secondary.main'}}>
+        <Link to='/newmember'>
+        <Paper elevation={7} sx={{...paperStyle, bgcolor: 'secondary.main'}}>
           <AddIcon sx={iconStyle}/>
         </Paper>
+        </Link>
       </Grid>
     )
   }
