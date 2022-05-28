@@ -8,6 +8,11 @@ import React from 'react'
 import SelectComponent from '../components/SelectComponent'
 import RadioComponent from '../components/RadioComponent'
 
+const containerStyle = {
+  bgcolor: 'mainBg', 
+  minHeight: '120vh'
+}
+
 const formContainerStyle = {
   borderRadius: '8px',
   display: 'flex',
@@ -130,10 +135,10 @@ export default function AddMember() {
     )
   }
   return (
-    <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
-      <Container maxWidth='xl'>
+    <Box sx={containerStyle}>
+     <Container maxWidth='xl'>
       {renderForm()}
-    </Container>
+     </Container>
     </Box>
   )
 }

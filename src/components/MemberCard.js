@@ -66,22 +66,25 @@ export default function MemberCard({user, activeNav}) {
     )
   }
 
+  function renderCardText(header, text){
+    return(
+      <>
+        <Typography variant='h6' sx={headerStyle}>
+          {header}
+        </Typography>
+        <Typography>
+          {text}
+        </Typography>
+      </>
+    )
+  }
+
   function renderCardContent(remainingTime){
     return(
       <CardContent sx={cardContentStyle}>
-      <Typography variant='h6' sx={headerStyle}>
-        Üye Adı
-      </Typography>
-      <Typography>
-        {user.name}
-      </Typography>
-      <Typography variant='h6' sx={headerStyle}>
-        Kalan Üyelik Süresi
-      </Typography>
-      <Typography>
-        {remainingTime} gün
-      </Typography>
-    </CardContent>
+        {renderCardText('Üye Adı', user.name)}
+        {renderCardText('Kalan Üyelik Süresi', remainingTime + ' gün')}
+     </CardContent>
     )
   }
 
