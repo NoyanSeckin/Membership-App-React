@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={GlobalTheme}>
-        <Navbar/>
         <BrowserRouter>
+          <Navbar/>
           <Routes>
             <Route path={'/'} element={<Home/>} />
             <Route path={'/newmember'} element={<NewMember/>} />

@@ -31,16 +31,9 @@ export default function RadioComponent({handleChange, value}) {
         onClick={closeOtherInput}/>
         <FormControlLabel
         value='other' control={<Radio />} label="Diğer" onClick={openOtherInput} checked={isOther}/>
-       
-        {/* <FormControlLabel
-          value="disabled"
-          disabled
-          control={<Radio />}
-          label="other"
-        /> */}
       </RadioGroup>
       <Box sx={{display: isOther ? 'block' : 'none'}}>
-          <input style={{boxSizing: 'padding-box'}} type="text" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
+          <input style={{boxSizing: 'padding-box'}} type="number" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
         </Box>
     </FormControl>
   );

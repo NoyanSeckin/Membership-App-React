@@ -1,6 +1,7 @@
 import {Box, Typography, Button, Container, Paper} from '@mui/material'
 import { Formik} from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import {app} from '../firebase/init' 
 import {doc, updateDoc, getFirestore, arrayUnion} from 'firebase/firestore'
 import React from 'react'
@@ -48,7 +49,7 @@ export default function AddMember() {
   async function addMember(values){
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members')
-    const userObject = {...values};
+    const userObject = {...values, id: uuidv4()};
     userObject.period = turnNumberToDate(userObject.period)
     updateDoc(membersRef, {
       membersArray: arrayUnion(userObject)
