@@ -95,6 +95,27 @@ export default function AddMember() {
    })
   }
 
+  function renderFormContent(values, handleChange){
+    return(
+      <Paper elevation={6} sx={formContainerStyle}>
+        {renderInputs(values, handleChange)}
+        <SelectComponent value={values.gender} handleChange={handleChange}/>
+        <RadioComponent value={values.period} handleChange={handleChange}/>
+        <Button variant='contained' type='submit' sx={submitBtnStyle}>
+          Üye Oluştur
+        </Button>
+      </Paper>
+    )
+  }
+
+  function renderFormHeader(){
+    return (
+      <Typography variant='h4' sx={{fontWeight: '600'}}>
+        Kayıt Formu
+      </Typography>
+    )
+  }
+
   function renderForm(){
     return(
       <Formik 
@@ -107,17 +128,8 @@ export default function AddMember() {
       }}>
         {({values, errors, handleSubmit, handleChange})=> (
           <form style={formStyle} onSubmit={handleSubmit}>
-              <Typography variant='h4' sx={{fontWeight: '600'}}>
-                Kayıt Formu
-              </Typography>
-            <Paper elevation={6} sx={formContainerStyle}>
-              {renderInputs(values, handleChange)}
-              <SelectComponent value={values.gender} handleChange={handleChange}/>
-              <RadioComponent value={values.period} handleChange={handleChange}/>
-              <Button variant='contained' type='submit' sx={submitBtnStyle}>
-                Üye Oluştur
-              </Button>
-            </Paper>
+            {renderFormHeader()}
+            {renderFormContent(values, handleChange)}
           </form>
         )}
       </Formik>
