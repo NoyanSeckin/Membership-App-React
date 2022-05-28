@@ -51,7 +51,6 @@ form input{
 	border-radius: 8px;
 	padding: 1rem 0.7rem;
 	border: 1px solid #fff;
-	margin-bottom: 1rem;
 	margin-top: 0.3rem;
 	
 }
@@ -88,6 +87,11 @@ form textarea:focus{
 	color: #3E3E3E;
 }
 
+form label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 /* hide input number arrows */
 
 /* Chrome, Safari, Edge, Opera */
@@ -100,4 +104,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+#gender{
+  padding-bottom: 0.6rem !important;
 }
