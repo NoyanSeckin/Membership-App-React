@@ -13,6 +13,7 @@ export const GlobalTheme = createTheme({
       light: '#76ff03'
     },
     textColor: '#525252',
+    mainBg: '#f2f2f2'
   },
   components:{
     MuiButton: {

@@ -112,3 +112,10 @@ input[type=number] {
 #gender{
   padding-bottom: 0.6rem !important;
 }
+
+.active-nav{
+	color: #b2102f !important;
+	border-bottom: 3px solid #b2102f;
+	padding-bottom: 10px;
+	z-index: 3;
+}

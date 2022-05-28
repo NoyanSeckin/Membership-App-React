@@ -13,7 +13,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{bgcolor: '#000'}}>
         <Container maxWidth='xl'>
-        <Toolbar sx={{justifyContent: 'space-between'}}>
+        <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
             <Link to='/' style={{display: 'flex', gap: '0.3rem'}}>
             <FitnessCenterIcon sx={{color: 'warning.dark', alignSelf: 'center'}}/>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'warning.main' }}>

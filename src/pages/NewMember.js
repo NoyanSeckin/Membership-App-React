@@ -18,7 +18,7 @@ const formContainerStyle = {
   pt: 4,
   pb: 2,
   px: 3,
-  borderTop: '50px #29b6f6 solid'
+  borderTop: '50px #2c387e solid'
 }
 
 const formStyle = {
