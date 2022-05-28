@@ -39,6 +39,11 @@ const detailBtnStyle = {
   }
 }
 
+const cardContentStyle = {
+  display: 'flex', 
+  flexDirection: 'column'
+}
+
 export default function MemberCard({user, activeNav}) {
 
   function renderTopBorderColor(period){
@@ -61,43 +66,60 @@ export default function MemberCard({user, activeNav}) {
     )
   }
 
-  function renderCard(){
+  function renderCardContent(remainingTime){
+    return(
+      <CardContent sx={cardContentStyle}>
+      <Typography variant='h6' sx={headerStyle}>
+        Üye Adı
+      </Typography>
+      <Typography>
+        {user.name}
+      </Typography>
+      <Typography variant='h6' sx={headerStyle}>
+        Kalan Üyelik Süresi
+      </Typography>
+      <Typography>
+        {remainingTime} gün
+      </Typography>
+    </CardContent>
+    )
+  }
+
+  function renderCardActions(){
+    return(
+      <CardActions>
+        <Button variant='outlined'
+        sx={detailBtnStyle}> 
+          Detaylara Git
+        </Button>
+      </CardActions>
+    )
+  }
+
+  function calculateRemainingTime(){
     const currentDateInSeconds = Date.now() / 1000;
     const oneDayInSeconds = 86400;
-    const remainingTime = Math.ceil(((user.period.seconds- currentDateInSeconds) / oneDayInSeconds));
-    
+    return Math.ceil(((user.period.seconds- currentDateInSeconds) / oneDayInSeconds))
+  }
+
+  function decideCondition(remainingTime){
     let condition;
     if(activeNav === 'Tüm Üyeler'){
       condition = true;
     } else if (activeNav === 'Aktif Üyeler'){
       condition = remainingTime > 0;
     } else condition = remainingTime < 0;
+    return condition;
+  }
 
+  function renderCard(){
+    const remainingTime = calculateRemainingTime();
+    const condition = decideCondition(remainingTime);
     return condition && (
       <Card key={user.id} sx={{...cardStyle, borderTopColor: renderTopBorderColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
-        <CardContent>
-          <Box sx={{display: 'flex', flexDirection: 'column'}}>
-            <Typography variant='h6' sx={headerStyle}>
-              Üye Adı
-            </Typography>
-            <Typography>
-              {user.name}
-            </Typography>
-            <Typography variant='h6' sx={headerStyle}>
-              Kalan Üyelik Süresi
-            </Typography>
-            <Typography>
-             {remainingTime} gün
-            </Typography>
-          </Box>
-        </CardContent>
-        <CardActions>
-          <Button variant='outlined'
-          sx={detailBtnStyle}> 
-            Detaylara Git
-          </Button>
-        </CardActions>
+        {renderCardContent(remainingTime)}
+        {renderCardActions()}
       </Card>
     )
   }
