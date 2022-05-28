@@ -16,8 +16,10 @@ export default function Members() {
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members');
     const response = await getDoc(membersRef);
-    setAllUsers(response.data().membersArray);
-    console.log(allUsers)
+    const membersArraySorted = response.data().membersArray.sort((a,b) => b.period.seconds - a.period.seconds);
+    console.log(membersArraySorted)
+    setAllUsers(membersArraySorted);
+    // console.log(allUsers)
   }
   
   function renderNavs(){
@@ -33,7 +35,7 @@ export default function Members() {
 
   function renderCards(){
    return allUsers?.map(user => (
-    <MemberCard user={user}/>
+    <MemberCard user={user} activeNav={activeNav} />
    ))
   }
   return (

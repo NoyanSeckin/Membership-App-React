@@ -39,15 +39,15 @@ const detailBtnStyle = {
   }
 }
 
-export default function MemberCard({user}) {
+export default function MemberCard({user, activeNav}) {
 
   function renderTopBorderColor(period){
     let color;
     if(period > 7){
-      color = 'primary.main'
-    }else if(period < 7 && period >= 4){
-      color = 'warning.main'
-    } else color = 'warning.dark';
+      color = 'secondary.dark'
+    }else if(period < 7 && period > 0){
+      color = 'warning.light'
+    } else color = 'danger.main';
     return color;
   }
 
@@ -65,7 +65,15 @@ export default function MemberCard({user}) {
     const currentDateInSeconds = Date.now() / 1000;
     const oneDayInSeconds = 86400;
     const remainingTime = Math.ceil(((user.period.seconds- currentDateInSeconds) / oneDayInSeconds));
-    return(
+    
+    let condition;
+    if(activeNav === 'Tüm Üyeler'){
+      condition = true;
+    } else if (activeNav === 'Aktif Üyeler'){
+      condition = remainingTime > 0;
+    } else condition = remainingTime < 0;
+
+    return condition && (
       <Card key={user.id} sx={{...cardStyle, borderTopColor: renderTopBorderColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         <CardContent>

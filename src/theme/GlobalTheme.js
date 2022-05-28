@@ -13,8 +13,10 @@ export const GlobalTheme = createTheme({
       light: '#76ff03'
     },
     danger: {
-
-    },
+      main: '#f44336',
+      light: '#f6685e',
+      dark: '#aa2e25'
+    },  
     textColor: '#525252',
     mainBg: '#f2f2f2'
   },
