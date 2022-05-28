@@ -39,11 +39,11 @@ const submitBtnStyle = {
 export default function AddMember() {
 
   function turnNumberToDate(value){
-    const aMonthEpoch = (86400 * 30);
+    const aMonthInMiliSeconds = (86400 * 30  * 1000);
     const today = Date.now();
-    let period = Number(value);
-    let epoch = (period / 30 ) * aMonthEpoch * 1000;
-    return new Date((today + epoch));
+    const period = Number(value);
+    const periodInMiliSeconds = (period / 30 ) * aMonthInMiliSeconds;
+    return new Date((today + periodInMiliSeconds));
   }
 
   async function addMember(values){
@@ -59,26 +59,20 @@ export default function AddMember() {
   const initialValues = {
     name: '',
     phone: '',
-    // weight: null,
-    // height: null,
     gender: '',
-    period: 30,
+    period: '30',
   }
 
   const yupObject = {
     name: Yup.string().required(),
     phone: Yup.number(),
-    // weight: Yup.number(),
-    // height: Yup.number(),
-    gender: Yup.string(),
-    period: Yup.number()
+    gender: Yup.string().required(),
+    period: Yup.string().required()
   }
 
   const inputInfos = {
     name: {label: 'Ad-Soyad', placeholder: 'Ad-Soyad giriniz', type: 'text'},
     phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'number'},
-    // weight: {label: 'Kilo', placeholder: 'Kilo giriniz', type: 'number'},
-    // height: {label: 'Boy', placeholder: 'Boy ölçüsü giriniz', type: 'number'},
   }
 
   function renderInputs(values, handleChange){
@@ -136,8 +130,10 @@ export default function AddMember() {
     )
   }
   return (
-    <Container maxWidth='xl'>
+    <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
+      <Container maxWidth='xl'>
       {renderForm()}
     </Container>
+    </Box>
   )
 }
