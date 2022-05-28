@@ -37,22 +37,19 @@ const submitBtnStyle = {
 
 export default function AddMember() {
 
-  function turnNumberToDate(){
-    
+  function turnNumberToDate(value){
+    const aMonthEpoch = (86400 * 30);
+    const today = Date.now();
+    let period = Number(value);
+    let epoch = (period / 30 ) * aMonthEpoch * 1000;
+    return new Date((today + epoch));
   }
 
   async function addMember(values){
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members')
     const userObject = {...values};
-
-    const aMonthEpoch = (86400 * 30);
-    const today = Date.now();
-    let period = Number(userObject.period);
-    let epoch = (period / 30 ) * aMonthEpoch * 1000;
-    userObject.period = new Date((today + epoch))
-
-    console.log(userObject.period)
+    userObject.period = turnNumberToDate(userObject.period)
     updateDoc(membersRef, {
       membersArray: arrayUnion(userObject)
     })
