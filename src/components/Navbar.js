@@ -8,6 +8,12 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {Container} from '@mui/material'
 import { Link } from "react-router-dom";
 
+const brandStyle = {
+  flexGrow: 1, 
+  color: 'warning.dark', 
+  fontWeight: '600' 
+}
+
 export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -16,7 +22,7 @@ export default function Navbar() {
         <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
             <Link to='/' style={{display: 'flex', gap: '0.3rem'}}>
             <FitnessCenterIcon sx={{color: 'warning.dark', alignSelf: 'center'}}/>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'warning.main' }}>
+              <Typography variant="h6" component="div" sx={brandStyle}>
                 STEEL GYM
             </Typography>
             </Link>

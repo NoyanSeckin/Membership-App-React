@@ -6,9 +6,22 @@ import MemberCard from '../components/MemberCard'
 
 export default function Members() {
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(()=> {
+    getUsers();
+  },[])
+
+  async function getUsers(){
+    const db = getFirestore();
+    const membersRef = doc(db, 'Members', 'members');
+    const response = await getDoc(membersRef);
+    setAllUsers(response.data().membersArray);
+    console.log(allUsers)
+  }
   
   function renderNavs(){
-    const navs = ['Tüm Üyeler', 'Aktif Üyeler', 'Süresi Geçen Üyeler'];
+    const navs = ['Tüm Üyeler', 'Aktif Üyeler', 'Süresi Dolan Üyeler'];
     return navs.map(nav => (
       <Typography variant='h5' onClick={()=> setActiveNav(nav)}
       className={nav === activeNav && 'active-nav'}
@@ -19,7 +32,9 @@ export default function Members() {
   }
 
   function renderCards(){
-   return <MemberCard/>
+   return allUsers?.map(user => (
+    <MemberCard user={user}/>
+   ))
   }
   return (
     <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
@@ -28,7 +43,7 @@ export default function Members() {
           <Box sx={{display: 'flex', gap: 3}}>
             {renderNavs()}
           </Box>
-          <Box sx={{display: 'flex'}}>
+          <Box sx={{display: 'flex', mt: 3, flexWrap: 'wrap', gap: 3}}>
             {renderCards()}
             </Box>
         </Paper>

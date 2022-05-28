@@ -12,6 +12,9 @@ export const GlobalTheme = createTheme({
       dark: '#357a38',
       light: '#76ff03'
     },
+    danger: {
+
+    },
     textColor: '#525252',
     mainBg: '#f2f2f2'
   },
