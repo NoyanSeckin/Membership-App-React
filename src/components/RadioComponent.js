@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {Box} from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export default function RadioComponent({handleChange, value}) {
+export default function RadioComponent({handleChange, value, label}) {
 
   const [isOther, setIsOther] = useState(false)
 
@@ -16,7 +16,7 @@ export default function RadioComponent({handleChange, value}) {
 
   return (
     <FormControl sx={{ml: 1}}>
-      <FormLabel id="demo-row-radio-buttons-group-label">Üyelik Süresi</FormLabel>
+      <FormLabel id="demo-row-radio-buttons-group-label">{label}</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"

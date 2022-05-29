@@ -1,7 +1,10 @@
 import {Box, Button, Card, CardActions, CardContent, Typography} from '@mui/material'
 import WomanIcon from '@mui/icons-material/Woman';
 import ManIcon from '@mui/icons-material/Man';
-import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
+import DetailsContext from '../contexts/DetailsContext'
+import React, {useContext} from 'react'
 
 const headerStyle = {
   fontWeight: '600'
@@ -45,6 +48,14 @@ const cardContentStyle = {
 }
 
 export default function MemberCard({user, activeNav}) {
+  const navigate = useNavigate();
+
+  const {setDetailsContext} = useContext(DetailsContext);
+
+  function handleClick(){
+    setDetailsContext(user);
+    navigate('/userdetail');
+  }
 
   function renderTopBorderColor(period){
     let color;
@@ -91,7 +102,8 @@ export default function MemberCard({user, activeNav}) {
   function renderCardActions(){
     return(
       <CardActions>
-        <Button variant='outlined'
+        <Button onClick={handleClick}
+        variant='outlined'
         sx={detailBtnStyle}> 
           Detaylara Git
         </Button>

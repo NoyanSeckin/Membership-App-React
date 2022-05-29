@@ -17,9 +17,7 @@ export default function Members() {
     const membersRef = doc(db, 'Members', 'members');
     const response = await getDoc(membersRef);
     const membersArraySorted = response.data().membersArray.sort((a,b) => b.period.seconds - a.period.seconds);
-    console.log(membersArraySorted)
     setAllUsers(membersArraySorted);
-    // console.log(allUsers)
   }
   
   function renderNavs(){
