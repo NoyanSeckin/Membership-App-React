@@ -16,8 +16,11 @@ export default function Members() {
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members');
     const response = await getDoc(membersRef);
+    // sort membersarray, from longest period to lowest
     const membersArraySorted = response.data().membersArray.sort((a,b) => b.period.seconds - a.period.seconds);
     setAllUsers(membersArraySorted);
+    // use session storage to update user data in userdetail page
+    sessionStorage.setItem('all-users', JSON.stringify(membersArraySorted));
   }
   
   function renderNavs(){

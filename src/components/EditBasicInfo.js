@@ -1,4 +1,5 @@
-import {Box, Button, Grid, Typography} from '@mui/material'
+import {Box, Button, Grid, Typography, Paper} from '@mui/material'
+
 import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext, useState} from 'react'
 import MainInfoForm from '../components/MainInfoForm'
@@ -15,7 +16,18 @@ const correctBtnStyle = {
   '&:hover': {bgcolor: 'warning.dark'}
 }
 
-export default function EditBasicInfo() {
+const leftGridPaperStyle = {
+  borderTop: '25px solid',
+  borderRadius: '8px',
+  display: 'flex', 
+  flexDirection: 'column', 
+  gap: 2, 
+  mt: 4, 
+  px: 6,
+  py: 3,
+}
+
+export default function EditBasicInfo({updateUser}) {
   // membercard comp sets detailsContext
   const {detailsContext, setDetailsContext} = useContext(DetailsContext);
   const user = detailsContext;
@@ -47,7 +59,7 @@ export default function EditBasicInfo() {
   function renderDetail(header, text){
     return(
       <Box>
-        <Typography variant='h5' sx={{fontWeight: '600'}}>{header}</Typography>
+        <Typography variant='h6' sx={{fontWeight: '600'}}>{header}</Typography>
         <Typography>{text || 'Belirtilmemiş'}</Typography>
       </Box>
     )
@@ -60,8 +72,8 @@ export default function EditBasicInfo() {
   function renderRemainingTime(){
     if(isCorrect){
       return(
-        <Box sx={{position: 'relative'}}>
-          <Typography variant='h5' sx={{fontWeight: 600}}>
+        <Box sx={{position: 'relative',}}>
+          <Typography variant='h6' sx={{fontWeight: 600}}>
             Kalan Üyelik Süresi
           </Typography>
           <input className='correct-input' type="number" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
@@ -82,14 +94,17 @@ export default function EditBasicInfo() {
 
   function renderLeftGrid(){
     return(
-      <Grid item md={6} sx={{display: 'flex', justifyContent: 'center'}}>
-        <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, mt: 4}}>
-          <Typography variant='h4' sx={{fontWeight: '600'}}>Üye Bilgileri</Typography>
+      <Grid item md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Typography variant='h4' sx={{fontWeight: '600'}}>Üye Bilgileri</Typography>
+        <Paper elevation={5}
+        sx={{...leftGridPaperStyle, borderTopColor: user.borderColor}}>
+          
+          {user.icon}
           {renderDetail('Ad-Soyad', user.name)}
           {renderDetail('Telefon Numarası', user.phone)}
           {renderDetail('Cinsiyet', genderToTurkish(user.gender))}
           {renderRemainingTime()}
-        </Box>
+        </Paper>
       </Grid>
     )
   }
@@ -97,7 +112,8 @@ export default function EditBasicInfo() {
   function renderRightGrid(){
     return(
       <Grid item md={6}>
-        {<MainInfoForm initialValues={initialValues} btnText={btnText} radioLabel={radioLabel}/>}
+        {<MainInfoForm submitAction={updateUser}
+        initialValues={initialValues} btnText={btnText} radioLabel={radioLabel}/>}
       </Grid>
     )
   }

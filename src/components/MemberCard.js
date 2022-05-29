@@ -53,7 +53,12 @@ export default function MemberCard({user, activeNav}) {
   const {setDetailsContext} = useContext(DetailsContext);
 
   function handleClick(remainingTime){
-    setDetailsContext({...user, period: remainingTime});
+    setDetailsContext({
+      ...user, 
+      period: remainingTime, 
+      icon: renderEitherIcon(user.gender),
+      borderColor: renderTopBorderColor(remainingTime),
+    });
     navigate('/userdetail');
   }
 
