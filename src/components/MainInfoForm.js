@@ -6,11 +6,6 @@ import React from 'react'
 import SelectComponent from './SelectComponent'
 import RadioComponent from './RadioComponent'
 
-const containerStyle = {
-  bgcolor: 'mainBg', 
-  minHeight: '120vh'
-}
-
 const formContainerStyle = {
   borderRadius: '8px',
   display: 'flex',
@@ -28,7 +23,6 @@ const formStyle = {
   display: 'flex', 
   alignItems: 'center',
   flexDirection: 'column',
-  paddingTop: '5rem',
   gap: '2rem'
 }
 
@@ -39,7 +33,19 @@ const submitBtnStyle = {
   fontSize: '16px'
 }
 
-export default function AddMember({initialValues, yupObject, inputInfos, formHeader, btnText, radioLabel, submitAction}) {
+export default function AddMember({initialValues, formHeader, btnText, radioLabel, submitAction}) {
+
+  const yupObject = {
+    name: Yup.string().required(),
+    phone: Yup.number(),
+    gender: Yup.string().required(),
+    period: Yup.string().required()
+  }
+
+  const inputInfos = {
+    name: {label: 'Ad-Soyad', placeholder: 'Ad-Soyad giriniz', type: 'text'},
+    phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'number'},
+  }
 
   function renderInputs(values, handleChange){
     return Object.entries(inputInfos).map(info => {
@@ -49,7 +55,8 @@ export default function AddMember({initialValues, yupObject, inputInfos, formHea
       <Box key={propName}
       sx={{display: 'flex', flexDirection: 'column'}}>
         <label htmlFor={propName}>{propValue.label}</label>
-        <input name={propName} type={propValue.type} id={propName} onChange={handleChange} value={values.propName}/>
+        <input name={propName} placeholder={propValue.placeholder}
+        type={propValue.type} id={propName} onChange={handleChange} value={values[propName]}/>
       </Box>
       )
    })
@@ -96,10 +103,8 @@ export default function AddMember({initialValues, yupObject, inputInfos, formHea
     )
   }
   return (
-    <Box sx={containerStyle}>
-     <Container maxWidth='xl'>
+     <>
       {renderForm()}
-     </Container>
-    </Box>
+     </>
   )
 }

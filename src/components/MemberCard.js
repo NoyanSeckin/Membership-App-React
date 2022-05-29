@@ -52,8 +52,8 @@ export default function MemberCard({user, activeNav}) {
 
   const {setDetailsContext} = useContext(DetailsContext);
 
-  function handleClick(){
-    setDetailsContext(user);
+  function handleClick(remainingTime){
+    setDetailsContext({...user, period: remainingTime});
     navigate('/userdetail');
   }
 
@@ -99,10 +99,10 @@ export default function MemberCard({user, activeNav}) {
     )
   }
 
-  function renderCardActions(){
+  function renderCardActions(remainingTime){
     return(
       <CardActions>
-        <Button onClick={handleClick}
+        <Button onClick={()=> handleClick(remainingTime)}
         variant='outlined'
         sx={detailBtnStyle}> 
           Detaylara Git
@@ -123,7 +123,7 @@ export default function MemberCard({user, activeNav}) {
       condition = true;
     } else if (activeNav === 'Aktif Üyeler'){
       condition = remainingTime > 0;
-    } else condition = remainingTime < 0;
+    } else condition = remainingTime <= 0;
     return condition;
   }
 
@@ -134,7 +134,7 @@ export default function MemberCard({user, activeNav}) {
       <Card key={user.id} sx={{...cardStyle, borderTopColor: renderTopBorderColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         {renderCardContent(remainingTime)}
-        {renderCardActions()}
+        {renderCardActions(remainingTime)}
       </Card>
     )
   }
