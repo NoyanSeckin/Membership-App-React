@@ -17,6 +17,9 @@ export default function UserDetail() {
     period: '30'
   }
 
+  const btnText = 'Üye Bilgilerini Güncelle'
+  const radioLabel = 'Üyelik süresi ekle'
+
   function renderDetail(header, text){
     return(
       <Box>
@@ -33,7 +36,7 @@ export default function UserDetail() {
   function renderLeftGrid(){
     return(
       <Grid item md={6} sx={{display: 'flex', justifyContent: 'center'}}>
-        <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, mt: 4}}>
           <Typography variant='h4' sx={{fontWeight: '600'}}>Üye Bilgileri</Typography>
           {renderDetail('Ad-Soyad', user.name)}
           {renderDetail('Telefon Numarası', user.phone)}
@@ -47,7 +50,7 @@ export default function UserDetail() {
   function renderRightGrid(){
     return(
       <Grid item md={6}>
-        {<MainInfoForm initialValues={initialValues}/>}
+        {<MainInfoForm initialValues={initialValues} btnText={btnText} radioLabel={radioLabel}/>}
       </Grid>
     )
   }
