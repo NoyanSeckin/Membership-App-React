@@ -4,27 +4,20 @@ import {app} from '../firebase/init'
 import {doc, updateDoc, getFirestore, arrayUnion} from 'firebase/firestore'
 import React from 'react'
 import MainInfoForm from '../components/MainInfoForm'
+import {convertNumberToDate} from '../Utils'
 
 const containerStyle = {
   bgcolor: 'mainBg', 
   minHeight: '120vh'
 }
 
-export default function AddMember() {
+export default function NewMember() {
 
-  function turnNumberToDate(value){
-    const aMonthInMiliSeconds = (86400 * 30  * 1000);
-    const today = Date.now();
-    const period = Number(value);
-    const periodInMiliSeconds = (period / 30 ) * aMonthInMiliSeconds;
-    return new Date((today + periodInMiliSeconds));
-  }
-
-  async function addMember(values){
+  async function AddMember(values){
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members')
     const userObject = {...values, id: uuidv4()};
-    userObject.period = turnNumberToDate(userObject.period)
+    userObject.period = convertNumberToDate(userObject.period)
     updateDoc(membersRef, {
       membersArray: arrayUnion(userObject)
     })
@@ -44,7 +37,7 @@ export default function AddMember() {
   return (
     <Box sx={containerStyle}>
      <Container maxWidth='xl' sx={{pt: 5}}>
-      <MainInfoForm initialValues={initialValues} formHeader={formHeader} btnText={btnText} radioLabel={radioLabel} submitAction={addMember}/>
+      <MainInfoForm initialValues={initialValues} formHeader={formHeader} btnText={btnText} radioLabel={radioLabel} submitAction={AddMember}/>
      </Container>
     </Box>
   )

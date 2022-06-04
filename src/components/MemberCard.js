@@ -1,8 +1,8 @@
 import {Box, Button, Card, CardActions, CardContent, Typography} from '@mui/material'
-import WomanIcon from '@mui/icons-material/Woman';
-import ManIcon from '@mui/icons-material/Man';
+
 import { useNavigate } from 'react-router-dom';
 
+import { renderEitherIcon, calculateRemainingTime } from '../Utils';
 import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext} from 'react'
 
@@ -10,25 +10,10 @@ const headerStyle = {
   fontWeight: '600'
 }
 
-const iconStyle = {
-  fontSize: '45px',
-  bgcolor: 'primary.main',
-  borderRadius: '50px',
-  px: 1.5,
-  py: 1.5,
-  opacity: 0.7
-}
-
 const cardStyle ={
   borderTop: '25px solid',
   minWidth: '240px',
   borderRadius: '8px'
-}
-
-const iconsContainerStyle = {
-  display: 'flex', 
-  justifyContent: 'center', 
-  pb: 0
 }
 
 const detailBtnStyle = {
@@ -56,13 +41,12 @@ export default function MemberCard({user, activeNav}) {
     setDetailsContext({
       ...user, 
       period: remainingTime, 
-      icon: renderEitherIcon(user.gender),
-      borderColor: renderTopBorderColor(remainingTime),
+      borderColor: renderBorderTopColor(remainingTime),
     });
     navigate('/userdetail');
   }
 
-  function renderTopBorderColor(period){
+  function renderBorderTopColor(period){
     let color;
     if(period > 7){
       color = 'secondary.dark'
@@ -70,16 +54,6 @@ export default function MemberCard({user, activeNav}) {
       color = 'warning.light'
     } else color = 'danger.main';
     return color;
-  }
-
-  function renderEitherIcon(gender){
-    return(
-       <CardContent sx={iconsContainerStyle}>
-          {gender === 'male' ? 
-          <ManIcon sx={iconStyle}/>
-         : <WomanIcon sx={{...iconStyle, bgcolor: 'pink'}}/>}
-        </CardContent>
-    )
   }
 
   function renderCardText(header, text){
@@ -116,12 +90,6 @@ export default function MemberCard({user, activeNav}) {
     )
   }
 
-  function calculateRemainingTime(){
-    const currentDateInSeconds = Date.now() / 1000;
-    const oneDayInSeconds = 86400;
-    return Math.ceil(((user.period.seconds- currentDateInSeconds) / oneDayInSeconds))
-  }
-
   function decideCondition(remainingTime){
     let condition;
     if(activeNav === 'Tüm Üyeler'){
@@ -133,10 +101,10 @@ export default function MemberCard({user, activeNav}) {
   }
 
   function renderCard(){
-    const remainingTime = calculateRemainingTime();
+    const remainingTime = calculateRemainingTime(user.period.seconds);
     const condition = decideCondition(remainingTime);
     return condition && (
-      <Card key={user.id} sx={{...cardStyle, borderTopColor: renderTopBorderColor(remainingTime)}}>
+      <Card key={user.id} sx={{...cardStyle, borderTopColor: renderBorderTopColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         {renderCardContent(remainingTime)}
         {renderCardActions(remainingTime)}

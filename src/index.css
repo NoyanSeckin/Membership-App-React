@@ -55,6 +55,7 @@ form input{
 	padding: 1rem 0.7rem;
 	border: 1px solid #fff;
 	margin-top: 0.3rem;
+	font-size: 17px;
 }
 
 input:focus{

@@ -7,12 +7,22 @@ import MemberCard from '../components/MemberCard'
 export default function Members() {
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
   const [allUsers, setAllUsers] = useState([]);
+  const sessionUsers = JSON.parse(sessionStorage.getItem('all-users'));
 
   useEffect(()=> {
-    getUsers();
+    fetchUsersFromDb()
   },[])
 
-  async function getUsers(){
+  function setUsers(){
+    if(sessionUsers !== null){
+      setAllUsers(sessionUsers);
+    } else{
+      fetchUsersFromDb();
+    }
+  }
+
+
+  async function fetchUsersFromDb(){
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members');
     const response = await getDoc(membersRef);

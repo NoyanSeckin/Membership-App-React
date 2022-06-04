@@ -1,6 +1,7 @@
 import {Box, Typography, Button, Container, Paper} from '@mui/material'
 import { Formik} from 'formik';
 import * as Yup from 'yup';
+import { convertNumberToDate } from '../Utils';
 
 import React from 'react'
 import SelectComponent from './SelectComponent'
@@ -33,13 +34,13 @@ const submitBtnStyle = {
   fontSize: '16px'
 }
 
-export default function AddMember({initialValues, formHeader, btnText, radioLabel, submitAction}) {
+export default function AddMember({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod}) {
 
   const yupObject = {
     name: Yup.string().required(),
     phone: Yup.number(),
     gender: Yup.string().required(),
-    period: Yup.string().required()
+    // period: Yup.string().required()
   }
 
   const inputInfos = {
@@ -91,6 +92,10 @@ export default function AddMember({initialValues, formHeader, btnText, radioLabe
         Yup.object(yupObject)
       }
       onSubmit={(values, {resetForm})=> {
+        if(existingUserPeriod){
+          // if values.period also selected add that to the  existing period
+          values.period = convertNumberToDate(values.period ? Number(values.period) + existingUserPeriod : existingUserPeriod);
+        }
         submitAction(values);
       }}>
         {({values, errors, handleSubmit, handleChange})=> (
