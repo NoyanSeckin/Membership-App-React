@@ -37,3 +37,13 @@ export function calculateRemainingTime(seconds){
   const oneDayInSeconds = 86400;
   return Math.ceil((seconds - currentDateInSeconds) / oneDayInSeconds);
 }
+
+export  function renderBorderTopColor(period){
+  let color;
+  if(period >= 8){
+    color = 'secondary.dark'
+  }else if(period <=7 && period > 0){
+    color = 'warning.light'
+  } else color = 'danger.main';
+  return color;
+}

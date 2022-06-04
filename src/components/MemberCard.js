@@ -2,7 +2,7 @@ import {Box, Button, Card, CardActions, CardContent, Typography} from '@mui/mate
 
 import { useNavigate } from 'react-router-dom';
 
-import { renderEitherIcon, calculateRemainingTime } from '../Utils';
+import { renderEitherIcon, calculateRemainingTime, renderBorderTopColor } from '../Utils';
 import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext} from 'react'
 
@@ -41,20 +41,11 @@ export default function MemberCard({user, activeNav}) {
     setDetailsContext({
       ...user, 
       period: remainingTime, 
-      borderColor: renderBorderTopColor(remainingTime),
     });
     navigate('/userdetail');
   }
 
-  function renderBorderTopColor(period){
-    let color;
-    if(period > 7){
-      color = 'secondary.dark'
-    }else if(period < 7 && period > 0){
-      color = 'warning.light'
-    } else color = 'danger.main';
-    return color;
-  }
+ 
 
   function renderCardText(header, text){
     return(

@@ -34,7 +34,7 @@ const submitBtnStyle = {
   fontSize: '16px'
 }
 
-export default function AddMember({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod}) {
+export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod}) {
 
   const yupObject = {
     name: Yup.string().required(),
@@ -92,11 +92,14 @@ export default function AddMember({initialValues, formHeader, btnText, radioLabe
         Yup.object(yupObject)
       }
       onSubmit={(values, {resetForm})=> {
+        console.log(values.period);
         if(existingUserPeriod){
           // if values.period also selected add that to the  existing period
-          values.period = convertNumberToDate(values.period ? Number(values.period) + existingUserPeriod : existingUserPeriod);
-        }
-        submitAction(values);
+          const newValue = values.period ? Number(values.period) + existingUserPeriod : existingUserPeriod;
+          console.log(values.period);
+          submitAction({...values, period: newValue})
+        } else  submitAction(values);
+       
       }}>
         {({values, errors, handleSubmit, handleChange})=> (
           <form style={formStyle} onSubmit={handleSubmit}>

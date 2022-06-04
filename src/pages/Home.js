@@ -13,8 +13,8 @@ const paperStyle = {
   justifyContent: 'center',
   transition: '500ms ease-in-out',
   '&:hover': {
-    px: 1.5,
-    py: 1.5,
+    px: {xs: 0, sm: 1.5},
+    py: {xs: 0, sm: 1.5},
     cursor: 'pointer',
   }
 }

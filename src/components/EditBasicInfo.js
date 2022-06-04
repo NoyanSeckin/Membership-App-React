@@ -4,7 +4,7 @@ import {getFirestore, doc, updateDoc} from 'firebase/firestore'
 import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext, useState} from 'react'
 import MainInfoForm from '../components/MainInfoForm'
-import { convertNumberToDate, renderEitherIcon, calculateRemainingTime} from '../Utils'
+import { convertNumberToDate, renderEitherIcon, calculateRemainingTime, renderBorderTopColor} from '../Utils'
 
 const correctBtnStyle = {
   bgcolor: 'danger.main', 
@@ -38,20 +38,23 @@ export default function EditBasicInfo() {
   
   const db = getFirestore();
   const membersRef = doc(db, 'Members', 'members');
+
+  
   
   async function updateUser(updatedUser){
     // change the updated user
-    const notUpdatedUsers = sessionUsers.filter(localUser => localUser.id !== updatedUser.id);
-    const updatedUsers = [...notUpdatedUsers, updatedUser]
+    console.log(user.period);
+    const notUpdatedUsers = sessionUsers.filter(localUser => localUser.id !== user.id);
+    const updatedUsers = [...notUpdatedUsers, {...updatedUser, period: convertNumberToDate(updatedUser.period), id: user.id}]
 
-    const newRemaniningTime = calculateRemainingTime(updatedUser.period.getTime() / 1000)
-    // update correcIinput to avoid displaying old value if iscorrect
-    setCorrectInput(newRemaniningTime);
+    // const newRemaniningTime = calculateRemainingTime(updatedUser.period.getTime() / 1000)
+    // update correcInput to avoid displaying old value if iscorrect
+    setCorrectInput(updatedUser.period);
     // update detailsContext to display changes
     setDetailsContext({ 
       ...user,
        ...updatedUser, 
-       period: newRemaniningTime
+       period: updatedUser.period
     });
     // update db and sessionStorage
     sessionStorage.setItem('all-users', JSON.stringify(updatedUsers))
@@ -69,11 +72,10 @@ export default function EditBasicInfo() {
 
   function handleCorrect(){
     if(correctInput >= 0){
-      const updatedUser = {...user, period: correctInput}
+      const updatedUser = {...user, period: Number(correctInput)}
       setIsCorrect(false);
       // change correctInput to date
-      const newPeriodDate = convertNumberToDate(correctInput);
-      updateUser({...updatedUser, period: newPeriodDate})
+      updateUser({...updatedUser, id: user.id})
     }
   }
 
@@ -81,7 +83,7 @@ export default function EditBasicInfo() {
     name: user.name,
     phone: user.phone,
     gender: user.gender,
-    period: '0'
+    period: ''
   }
 
   const btnText = 'Üye Bilgilerini Güncelle'
@@ -128,7 +130,7 @@ export default function EditBasicInfo() {
       <Grid item md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Typography variant='h4' sx={{fontWeight: '600'}}>Üye Bilgileri</Typography>
         <Paper elevation={5}
-        sx={{...leftGridPaperStyle, borderTopColor: user.borderColor}}>
+        sx={{...leftGridPaperStyle, borderTopColor: renderBorderTopColor(user.period)}}>
           
           {renderEitherIcon(user.gender)}
           {renderDetail('Ad-Soyad', user.name)}
