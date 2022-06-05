@@ -1,21 +1,30 @@
-import {Box, Button, Grid, Typography, Paper} from '@mui/material'
+import {Box, Button, Grid, Typography, Paper,} from '@mui/material'
 import {getFirestore, doc, updateDoc} from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext, useState} from 'react'
-import MainInfoForm from '../components/MainInfoForm'
-import { convertNumberToDate, renderEitherIcon, calculateRemainingTime, renderBorderTopColor} from '../Utils'
+import MainInfoForm from './MainInfoForm'
+import Modal from './Modal'
+import { convertNumberToDate, renderEitherIcon,  renderBorderTopColor} from '../Utils'
+
+
+
+const errorBtnStyle = {
+  bgcolor: 'danger.main',
+  color: '#fff',
+  fontWeight: 700,
+  '&:hover': {bgcolor: 'warning.dark'}
+}
 
 const correctBtnStyle = {
+  ...errorBtnStyle,
   bgcolor: 'danger.main', 
-  color: '#fff',
   flexShrink: 1, 
   position: 'absolute',
-  fontWeight: 700,
   right: 0,
   py: 0,
   top: '32px',
-  '&:hover': {bgcolor: 'warning.dark'}
 }
 
 const leftGridPaperStyle = {
@@ -30,16 +39,27 @@ const leftGridPaperStyle = {
 }
 
 export default function EditBasicInfo() {
+  const navigate = useNavigate()
   // membercard comp sets detailsContext
   const {detailsContext, setDetailsContext} = useContext(DetailsContext);
   const user = detailsContext;
+
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [correctInput, setCorrectInput] = useState(user.period)
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
 
   const sessionUsers = JSON.parse(sessionStorage.getItem('all-users'));
   
   const db = getFirestore();
   const membersRef = doc(db, 'Members', 'members');
 
-  
+  async function deleteUser() {
+    const stayingUsers = sessionUsers.filter(localUser => localUser.id !== user.id)
+    updateDoc(membersRef, {
+      membersArray: stayingUsers
+    });
+    navigate('/members');
+  }
   
   async function updateUser(updatedUser){
     // change the updated user
@@ -47,8 +67,7 @@ export default function EditBasicInfo() {
     const notUpdatedUsers = sessionUsers.filter(localUser => localUser.id !== user.id);
     const updatedUsers = [...notUpdatedUsers, {...updatedUser, period: convertNumberToDate(updatedUser.period), id: user.id}]
 
-    // const newRemaniningTime = calculateRemainingTime(updatedUser.period.getTime() / 1000)
-    // update correcInput to avoid displaying old value if iscorrect
+   
     setCorrectInput(updatedUser.period);
     // update detailsContext to display changes
     setDetailsContext({ 
@@ -63,8 +82,7 @@ export default function EditBasicInfo() {
     })
   }
 
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [correctInput, setCorrectInput] = useState(user.period)
+
   
   function handleCorrectInput(e){
     setCorrectInput(e.target.value);
@@ -125,6 +143,12 @@ export default function EditBasicInfo() {
     )
   }
 
+  const renderDeleteUserBtn = () =>(
+    <Button sx={errorBtnStyle} onClick={()=> setIsDeleteModal(true)}>
+      Üyeyi Sil
+    </Button>
+  )
+
   function renderLeftGrid(){
     return(
       <Grid item md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -137,6 +161,7 @@ export default function EditBasicInfo() {
           {renderDetail('Telefon Numarası', user.phone)}
           {renderDetail('Cinsiyet', genderToTurkish(user.gender))}
           {renderRemainingTime()}
+          {renderDeleteUserBtn()}
         </Paper>
       </Grid>
     )
@@ -163,6 +188,7 @@ export default function EditBasicInfo() {
   return (
      <>
       {renderGrid()}
+      <Modal isModal={isDeleteModal} setIsModal={setIsDeleteModal} action={deleteUser}/>
      </>     
   )
 }
