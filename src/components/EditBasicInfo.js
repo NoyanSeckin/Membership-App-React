@@ -8,8 +8,6 @@ import MainInfoForm from './MainInfoForm'
 import Modal from './Modal'
 import { convertNumberToDate, renderEitherIcon,  renderBorderTopColor} from '../Utils'
 
-
-
 const errorBtnStyle = {
   bgcolor: 'danger.main',
   color: '#fff',

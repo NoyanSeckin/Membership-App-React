@@ -1,4 +1,3 @@
-import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,6 +6,9 @@ import Button from '@mui/material/Button';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {Container} from '@mui/material'
 import { Link } from "react-router-dom";
+import {getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'firebase/auth'
+import React, {useState, useEffect} from 'react';
+import SignInModal from './SignInModal'
 
 const brandStyle = {
   flexGrow: 1, 
@@ -32,6 +34,39 @@ const authBtnStyle = {
 }
 
 export default function Navbar() {
+  const [isSignInModal, setIsSignInModal] = useState(true)
+
+  const openLoginModal = ()=> setIsSignInModal(true)
+
+  const auth = getAuth();
+
+  useEffect(() => {
+  console.log(auth);
+  onAuthStateChanged(auth, (user)=> {
+    console.log('auth changecd', user);
+    if(user){
+      
+    }
+  })
+  }, [auth]);
+
+  async function signInUser(email, password){
+    signInWithEmailAndPassword(auth, email, password).then(cred => {
+      // setAuthentication(cred.user.email)
+    }).catch(err => console.log(err))
+  }
+
+  async function signOutUser(){
+    signOut(auth);
+  }
+
+  const renderAuth = () => (
+    <div>
+      <Button onClick={openLoginModal} sx={authBtnStyle}>Giriş Yap</Button>
+      <Button onClick={signOutUser}>Çıkış Yap</Button>
+    </div>
+  )
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{bgcolor: '#000'}}>
@@ -43,10 +78,12 @@ export default function Navbar() {
                 STEEL GYM
             </Typography>
             </Link>
-          <Button sx={authBtnStyle}>Giriş Yap</Button>
+          {renderAuth()}
+
         </Toolbar>
         </Container>
       </AppBar>
+      <SignInModal isModal={isSignInModal} setIsModal={setIsSignInModal} signInUser={signInUser}/>
     </Box>
   );
 }

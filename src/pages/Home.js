@@ -72,8 +72,10 @@ export default function Home() {
   }
 
   return (
-    <Container maxWidth='xl'>
+    <Box sx={{bgcolor: 'mainBg', minHeight: '100vh'}}>
+      <Container maxWidth='xl'>
       {renderGrid()}
     </Container>
+    </Box>
   )
 }
