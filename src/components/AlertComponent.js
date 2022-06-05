@@ -3,21 +3,26 @@ import Alert from '@mui/material/Alert';
 import React,{useEffect} from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-export default function AlertComponent({isAlert, setIsAlert, alertText}) {
+export default function AlertComponent({isAlert, setIsAlert, alertText, alertType, customStyle}) {
+  const returnEither = (error, success) => (
+    alertType === 'error'  ? error : success
+    ) 
 
   const alertStyle = {
-    background: '#F1FFF0',
+    bgcolor: returnEither('danger.main', '#F1FFF0'),
     borderRadius:' 8px',
     boxShadow:' 0px 3px 12px #1E36482E',
-    color: '#46af32',
+    color: returnEither('#fff', '#46af32'),
     fontSize: '16px',
     position: 'absolute',
-    zIndex: 3,
+    zIndex: 5,
     mr: 3,
     py: 1.3,
     right: '-20px',
     top: '85px',
     width: '321px',
+    ...customStyle
+     
   }
 
 
@@ -43,7 +48,7 @@ export default function AlertComponent({isAlert, setIsAlert, alertText}) {
 
   function renderAlert() {
     return(isAlert &&
-    <Alert icon={<CheckCircleIcon/>} variant="filled" 
+    <Alert icon={returnEither(<ErrorIcon/>, <CheckCircleIcon/>)} variant="filled" 
     sx={alertStyle} >
       {alertText}
     </Alert>)

@@ -39,7 +39,7 @@ export default function Home() {
   const {authContext} = useContext(AuthContext)
 
   const [isAlert, setIsAlert] = useState(false);
-  const [alertObject, setAlertObject] = useState({isAlert, setIsAlert})
+  const [alertObject, setAlertObject] = useState({})
   const successText = 'Giriş başarılı'
   const errorText = 'Lütfen giriş yapın'
 
@@ -47,6 +47,7 @@ export default function Home() {
     if(authContext){
       navigate(path);
     } else {
+      setIsAlert(true)
       setAlertObject({...alertObject, text: errorText, type: 'error'})
     }
   }
@@ -92,7 +93,7 @@ export default function Home() {
     <Box sx={{bgcolor: 'mainBg', minHeight: '100vh'}}>
       <Container maxWidth='xl'>
       {renderGrid()}
-      <AlertComponent isAlert={alertObject.isAlert} setIsAlert={alertObject.setIsAlert} alertText={alertObject.text} alertType={alertObject.type}/>
+      <AlertComponent isAlert={isAlert} setIsAlert={setIsAlert} alertText={alertObject.text} alertType={alertObject.type}/>
     </Container>
     </Box>
   )

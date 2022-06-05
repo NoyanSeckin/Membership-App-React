@@ -20,7 +20,7 @@ const style = {
   top: '50%',
   transform: 'translate(-50%, -50%)',
   width: '355px',
-  zIndex: 33,
+  zIndex: 3,
 };
 
 const loginButton = {
@@ -29,7 +29,7 @@ const loginButton = {
   color: '#fff', 
   fontSize: '18px', 
   width: '100%',
-  '&:hover': {backgroundColor: 'primary.main'}
+  '&:hover': {bgcolor: 'primary.main'}
 }
 
   const closeButton = {
@@ -41,15 +41,13 @@ const loginButton = {
     width: '100%',
   }
 
-export default function SignInModal({isModal, setIsModal, signInUser}) {
+export default function SignInModal({isModal, setIsModal, signInUser, renderAlert}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-
-
   
   const handleClose = () => setIsModal(false);
 
@@ -96,6 +94,7 @@ export default function SignInModal({isModal, setIsModal, signInUser}) {
           <Box sx={style}>
             {renderHeader()}
             {renderForm()}
+            {renderAlert && renderAlert()}
           </Box> 
         </Fade>
       </Modal>

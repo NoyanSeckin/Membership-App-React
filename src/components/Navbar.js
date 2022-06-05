@@ -4,22 +4,23 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import {Container} from '@mui/material'
+import { Container} from '@mui/material'
 import { Link } from "react-router-dom";
 import {getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'firebase/auth'
 import React, {useState, useEffect, useContext} from 'react';
 import SignInModal from './SignInModal'
 import AuthContext from '../contexts/AuthContext';
+import AlertComponent from './AlertComponent';
 
 const brandStyle = {
   flexGrow: 1, 
-  color: 'warning.dark', 
+  color: 'danger.dark', 
   fontWeight: '600' 
 }
 
 const iconStyle = {
   alignSelf: 'center',
-  color: 'warning.dark', 
+  color: 'danger.dark', 
 }
 
 const linkStyle = {
@@ -28,17 +29,22 @@ const linkStyle = {
 }
 
 const authBtnStyle = {
-  bgcolor: 'danger.main', 
+  bgcolor: 'danger.dark', 
   color: '#fff ', 
   px: 3.5,
   fontSize: '15px',
-  '&:hover': {bgcolor: 'danger.dark'}
+  '&:hover': {bgcolor: 'danger.main'}
 }
 
 export default function Navbar() {
   const {authContext, setAuthContext} = useContext(AuthContext)
 
-  const [isSignInModal, setIsSignInModal] = useState(false)
+  const [isSignInModal, setIsSignInModal] = useState(false);
+  // const [signInErrorText, setSignInErrorText] = useState('');
+
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertObject, setAlertObject]= useState({})
+  
   const openSignInModal = ()=> setIsSignInModal(true)
 
   const auth = getAuth();
@@ -49,28 +55,52 @@ export default function Navbar() {
   })
   }, []);
 
+  function setAuthErrMessage(errorMessage){
+    let errorText;
+    if(errorMessage.includes('wrong-password')){
+      errorText = 'Hatalı şifre girdiniz.';
+    } else if(errorMessage.includes('user-not-found')){
+      errorText = 'Hatalı email girdiniz';
+    }
+    setAlertObject({text: errorText, type: 'error'})
+    setIsAlert(true);
+  } 
 
+  function handleSignInSuccess(){
+    setIsSignInModal(false);
+    setAlertObject({type: 'success', text: 'Giriş başarılı !'})
+    setIsAlert(true);
+  }
 
   async function signInUser(email, password){
-    signInWithEmailAndPassword(auth, email, password).then(cred => {
-    }).catch(err => console.log(err))
+    signInWithEmailAndPassword(auth, email, password).then(cred =>  handleSignInSuccess()).catch(err => setAuthErrMessage(err.message))
   }
 
   async function signOutUser(){
     signOut(auth);
-    console.log('signed out');
   }
 
   const renderAuthBtn = () => (
-    <div>
+    <>
      {
      authContext ?  
      <Button onClick={signOutUser} sx={authBtnStyle}>Çıkış Yap</Button>
      :
      <Button onClick={openSignInModal} sx={authBtnStyle}>Giriş Yap</Button>
     }
-    </div>
+    </>
   )
+    function renderAlert() {
+      // error alert is displayed in signIn modal and success in modal
+      return (
+      <AlertComponent isAlert={isAlert} setIsAlert={setIsAlert} alertText={alertObject.text} alertType={alertObject.type} 
+      customStyle={
+        alertObject.type === 'error' 
+        &&
+        {right: '-23px', top: '-65px', width: '355px'} 
+      }/>
+      )
+    }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -88,7 +118,8 @@ export default function Navbar() {
         </Toolbar>
         </Container>
       </AppBar>
-      <SignInModal isModal={isSignInModal} setIsModal={setIsSignInModal} signInUser={signInUser}/>
+      <SignInModal isModal={isSignInModal} setIsModal={setIsSignInModal} signInUser={signInUser} authContext={authContext} renderAlert={alertObject.type === 'error' && renderAlert}/>
+      {renderAlert()}
     </Box>
   );
 }

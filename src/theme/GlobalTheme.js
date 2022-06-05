@@ -15,7 +15,7 @@ export const GlobalTheme = createTheme({
     danger: {
       main: '#f44336',
       light: '#f6685e',
-      dark: '#aa2e25'
+      dark: '#d50000'
     },  
     textColor: '#525252',
     mainBg: '#f2f2f2'
