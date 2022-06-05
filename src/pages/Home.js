@@ -1,8 +1,11 @@
 import {Container, Box, Button, Grid, Paper, Typography} from '@mui/material'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AddIcon from '@mui/icons-material/Add';
-import {Link} from 'react-router-dom'
-import React from 'react'
+import {useNavigate} from 'react-router-dom'
+import React, {useContext, useState} from 'react'
+import AlertComponent from '../components/AlertComponent';
+import AuthContext from '../contexts/AuthContext';
+
 
 const paperStyle = {
   minHeight: '400px',
@@ -31,6 +34,22 @@ const iconStyle = {
 }
 
 export default function Home() {
+  const navigate = useNavigate()
+  
+  const {authContext} = useContext(AuthContext)
+
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertObject, setAlertObject] = useState({isAlert, setIsAlert})
+  const successText = 'Giriş başarılı'
+  const errorText = 'Lütfen giriş yapın'
+
+  function handleNavigate(path) {
+    if(authContext){
+      navigate(path);
+    } else {
+      setAlertObject({...alertObject, text: errorText, type: 'error'})
+    }
+  }
 
   function renderLeftGrid(){
     return(
@@ -38,11 +57,10 @@ export default function Home() {
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Mevcut Üyeleri Gör
         </Typography>
-        <Link to='/members'>
-        <Paper elevation={7} sx={{...paperStyle, bgcolor: 'primary.main'}}>
+        <Paper onClick={()=> handleNavigate('/members')}
+        elevation={7} sx={{...paperStyle, bgcolor: 'primary.main'}}>
           <SupervisorAccountIcon sx={iconStyle}/>
         </Paper>
-        </Link>
       </Grid>
     )
   }
@@ -53,11 +71,10 @@ export default function Home() {
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Yeni Üye Ekle
         </Typography>
-        <Link to='/newmember'>
-        <Paper elevation={7} sx={{...paperStyle, bgcolor: 'secondary.main'}}>
+        <Paper onClick={()=> handleNavigate('/newmember')}
+        elevation={7} sx={{...paperStyle, bgcolor: 'secondary.main'}}>
           <AddIcon sx={iconStyle}/>
         </Paper>
-        </Link>
       </Grid>
     )
   }
@@ -75,6 +92,7 @@ export default function Home() {
     <Box sx={{bgcolor: 'mainBg', minHeight: '100vh'}}>
       <Container maxWidth='xl'>
       {renderGrid()}
+      <AlertComponent isAlert={alertObject.isAlert} setIsAlert={alertObject.setIsAlert} alertText={alertObject.text} alertType={alertObject.type}/>
     </Container>
     </Box>
   )

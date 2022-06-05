@@ -95,7 +95,7 @@ export default function MemberCard({user, activeNav}) {
     const remainingTime = calculateRemainingTime(user.period.seconds);
     const condition = decideCondition(remainingTime);
     return condition && (
-      <Card key={user.id} sx={{...cardStyle, borderTopColor: renderBorderTopColor(remainingTime)}}>
+      <Card sx={{...cardStyle, borderTopColor: renderBorderTopColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         {renderCardContent(remainingTime)}
         {renderCardActions(remainingTime)}

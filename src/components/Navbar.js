@@ -7,8 +7,9 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import {Container} from '@mui/material'
 import { Link } from "react-router-dom";
 import {getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'firebase/auth'
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import SignInModal from './SignInModal'
+import AuthContext from '../contexts/AuthContext';
 
 const brandStyle = {
   flexGrow: 1, 
@@ -27,43 +28,47 @@ const linkStyle = {
 }
 
 const authBtnStyle = {
-  bgcolor: 'warning.dark', 
+  bgcolor: 'danger.main', 
   color: '#fff ', 
   px: 3.5,
   fontSize: '15px',
+  '&:hover': {bgcolor: 'danger.dark'}
 }
 
 export default function Navbar() {
-  const [isSignInModal, setIsSignInModal] = useState(true)
+  const {authContext, setAuthContext} = useContext(AuthContext)
 
-  const openLoginModal = ()=> setIsSignInModal(true)
+  const [isSignInModal, setIsSignInModal] = useState(false)
+  const openSignInModal = ()=> setIsSignInModal(true)
 
   const auth = getAuth();
 
   useEffect(() => {
-  console.log(auth);
   onAuthStateChanged(auth, (user)=> {
-    console.log('auth changecd', user);
-    if(user){
-      
-    }
+    setAuthContext(Boolean(user))
   })
-  }, [auth]);
+  }, []);
+
+
 
   async function signInUser(email, password){
     signInWithEmailAndPassword(auth, email, password).then(cred => {
-      // setAuthentication(cred.user.email)
     }).catch(err => console.log(err))
   }
 
   async function signOutUser(){
     signOut(auth);
+    console.log('signed out');
   }
 
-  const renderAuth = () => (
+  const renderAuthBtn = () => (
     <div>
-      <Button onClick={openLoginModal} sx={authBtnStyle}>Giriş Yap</Button>
-      <Button onClick={signOutUser}>Çıkış Yap</Button>
+     {
+     authContext ?  
+     <Button onClick={signOutUser} sx={authBtnStyle}>Çıkış Yap</Button>
+     :
+     <Button onClick={openSignInModal} sx={authBtnStyle}>Giriş Yap</Button>
+    }
     </div>
   )
 
@@ -78,7 +83,7 @@ export default function Navbar() {
                 STEEL GYM
             </Typography>
             </Link>
-          {renderAuth()}
+          {renderAuthBtn()}
 
         </Toolbar>
         </Container>

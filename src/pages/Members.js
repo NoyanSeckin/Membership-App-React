@@ -45,8 +45,8 @@ export default function Members() {
   }
 
   function renderCards(){
-   return allUsers?.map(user => (
-    <MemberCard user={user} activeNav={activeNav} />
+   return allUsers?.map((user, index) => (
+    <MemberCard  user={user} activeNav={activeNav} /> 
    ))
   }
   return (
