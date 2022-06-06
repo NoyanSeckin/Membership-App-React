@@ -46,7 +46,7 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
 
   const inputInfos = {
     name: {label: 'Ad-Soyad', placeholder: 'Ad-Soyad giriniz', type: 'text'},
-    phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'number'},
+    phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'text'},
   }
 
   function renderInputs(values, errors, handleChange){
@@ -72,7 +72,7 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
       <Paper elevation={6} sx={formContainerStyle}>
         {renderInputs(values, errors, handleChange)}
         <SelectComponent value={values.gender} handleChange={handleChange} error={errors.gender}/>
-        {remainingTime()}
+        {remainingTime && remainingTime()}
         <RadioComponent label={radioLabel} value={values.period} handleChange={handleChange}/>
         <Button variant='contained' type='submit' sx={submitBtnStyle}>
           {btnText}

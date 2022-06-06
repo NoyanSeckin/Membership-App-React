@@ -1,13 +1,13 @@
-import {Box, Container, Paper, Typography} from '@mui/material'
+import {Box, Container, Typography} from '@mui/material'
 import {doc, getDoc, getFirestore} from 'firebase/firestore'
 
 import React, {useState, useEffect} from 'react'
 import MemberCard from '../components/MemberCard'
 
 export default function Members() {
+ 
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
   const [allUsers, setAllUsers] = useState([]);
-  const sessionUsers = JSON.parse(sessionStorage.getItem('all-users'));
 
   useEffect(()=> {
     fetchUsersFromDb()
