@@ -3,7 +3,6 @@ import {ThemeProvider} from '@mui/material/styles';
 import {GlobalTheme} from './theme/GlobalTheme'
 
 import React, {useState} from 'react'
-import DetailsContext from "./contexts/DetailsContext";
 import AuthContext from "./contexts/AuthContext";
 import Home from './pages/Home'
 import NewMember from './pages/NewMember';
@@ -12,13 +11,11 @@ import Navbar from './components/Navbar'
 import UserDetail from "./pages/UserDetail";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 function App() {
-  const [detailsContext, setDetailsContext] = useState({});
   const [authContext, setAuthContext] = useState();
   return (
     <div className="App">
       <ThemeProvider theme={GlobalTheme}>
         <AuthContext.Provider value={{authContext, setAuthContext}}>
-        <DetailsContext.Provider value={{detailsContext, setDetailsContext}}>
           <BrowserRouter>
             <Navbar/>
             <Routes>
@@ -30,7 +27,6 @@ function App() {
               </Route>  
             </Routes>
           </BrowserRouter>
-        </DetailsContext.Provider>
         </AuthContext.Provider>
       </ThemeProvider>
     </div>

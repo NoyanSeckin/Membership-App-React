@@ -32,7 +32,7 @@ export default function RadioComponent({handleChange, value, label}) {
         <FormControlLabel
         value='other' control={<Radio />} label="Diğer" onClick={openOtherInput} checked={isOther}/>
       </RadioGroup>
-      <Box sx={{display: isOther ? 'block' : 'none'}}>
+      <Box sx={{display: isOther ? 'inline' : 'none'}}>
           <input style={{boxSizing: 'padding-box'}} type="number" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
         </Box>
     </FormControl>

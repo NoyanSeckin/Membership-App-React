@@ -1,10 +1,9 @@
-import {Box, Button, Card, CardActions, CardContent, Typography} from '@mui/material'
+import {Button, Card, CardActions, CardContent, Typography} from '@mui/material'
 
 import { useNavigate } from 'react-router-dom';
 
 import { renderEitherIcon, calculateRemainingTime, renderBorderTopColor } from '../Utils';
-import DetailsContext from '../contexts/DetailsContext'
-import React, {useContext} from 'react'
+import React from 'react'
 
 const headerStyle = {
   fontWeight: '600'
@@ -35,17 +34,12 @@ const cardContentStyle = {
 export default function MemberCard({user, activeNav}) {
   const navigate = useNavigate();
 
-  const {setDetailsContext} = useContext(DetailsContext);
 
   function handleClick(remainingTime){
-    setDetailsContext({
-      ...user, 
-      period: remainingTime, 
-    });
+  const userDetail = {...user, period: remainingTime};
+  sessionStorage.setItem('user-detail', JSON.stringify(userDetail))
     navigate('/userdetail');
   }
-
- 
 
   function renderCardText(header, text){
     return(

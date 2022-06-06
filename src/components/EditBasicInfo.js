@@ -2,8 +2,7 @@ import {Box, Button, Typography} from '@mui/material'
 import {getFirestore, doc, updateDoc} from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 
-import DetailsContext from '../contexts/DetailsContext'
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import MainInfoForm from './MainInfoForm'
 import Modal from './Modal'
 import { convertNumberToDate} from '../Utils'
@@ -51,9 +50,8 @@ const remainingTimeContainer = {
 
 export default function EditBasicInfo() {
   const navigate = useNavigate()
-  // membercard comp sets detailsContext
-  const {detailsContext, setDetailsContext} = useContext(DetailsContext);
-  const user = detailsContext;
+
+  const user = JSON.parse(sessionStorage.getItem('user-detail'))
 
   const [isCorrect, setIsCorrect] = useState(false);
   const [correctInput, setCorrectInput] = useState(user.period)
@@ -73,17 +71,13 @@ export default function EditBasicInfo() {
   }
   
   async function updateUser(updatedUser){
-    // change the updated user
-    console.log(user.period);
     const notUpdatedUsers = sessionUsers.filter(localUser => localUser.id !== user.id);
+    // change the updated user
     const updatedUsers = [...notUpdatedUsers, {...updatedUser, period: convertNumberToDate(updatedUser.period), id: user.id}]
     setCorrectInput(updatedUser.period);
-    // update detailsContext to display changes
-    setDetailsContext({ 
-      ...user,
-       ...updatedUser, 
-       period: updatedUser.period
-    });
+   sessionStorage.setItem('user-detail', JSON.stringify({
+     ...user, ...updatedUser
+   }))
     // update db and sessionStorage
     sessionStorage.setItem('all-users', JSON.stringify(updatedUsers))
     updateDoc(membersRef, {
