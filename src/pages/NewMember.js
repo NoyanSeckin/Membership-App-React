@@ -34,10 +34,14 @@ export default function NewMember() {
   const btnText = 'Üye Oluştur'
   const radioLabel = 'Üyelik Süresi'
 
+  const renderForm = () => (
+    <MainInfoForm initialValues={initialValues} formHeader={formHeader} btnText={btnText} radioLabel={radioLabel} submitAction={AddMember} alertText={'Üye başarıyla eklendi'} isResetForm={true}/>
+  )
+
   return (
     <Box sx={containerStyle}>
      <Container maxWidth='xl' sx={{pt: 5}}>
-      <MainInfoForm initialValues={initialValues} formHeader={formHeader} btnText={btnText} radioLabel={radioLabel} submitAction={AddMember}/>
+        {renderForm()}
      </Container>
     </Box>
   )

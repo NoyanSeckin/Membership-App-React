@@ -2,9 +2,10 @@ import {Box, Typography, Button,  Paper} from '@mui/material'
 import { Formik} from 'formik';
 import * as Yup from 'yup';
 
-import React from 'react'
+import React, {useState} from 'react'
 import SelectComponent from './SelectComponent'
 import RadioComponent from './RadioComponent'
+import AlertComponent from './AlertComponent'
 
 const formContainerStyle = {
   borderRadius: '8px',
@@ -16,7 +17,7 @@ const formContainerStyle = {
   pt: 4,
   pb: 2,
   px: 3,
-  borderTop: '50px #2c387e solid'
+  borderTop: '40px #2c387e solid'
 }
 
 const formStyle = {
@@ -35,7 +36,9 @@ const submitBtnStyle = {
   mt: -1.3
 }
 
-export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod, remainingTime}) {
+export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod, remainingTime, alertText, isResetForm}) {
+
+  const [isAlert, setIsAlert] = useState(false);
 
   const yupObject = {
     name: Yup.string().required('Ad-Soyad boş bırakılamaz'),
@@ -100,6 +103,7 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
         Yup.object(yupObject)
       }
       onSubmit={(values, {resetForm})=> {
+        if(values.period === null) values.period = 0;
         console.log(values.period);
         if(existingUserPeriod){
           // if values.period also selected add that to the  existing period
@@ -107,6 +111,8 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
           console.log(values.period);
           submitAction({...values, period: newValue})
         } else  submitAction(values);
+        setIsAlert(true);
+        isResetForm && resetForm();
        
       }}>
         {({values, errors, handleSubmit, handleChange})=> (
@@ -118,9 +124,14 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
       </Formik>
     )
   }
+  
+  const renderAlert = () => (
+    <AlertComponent isAlert={isAlert} setIsAlert={setIsAlert} type={'success'} alertText={alertText}/>
+  )
   return (
      <>
       {renderForm()}
+      {renderAlert()}
      </>
   )
 }

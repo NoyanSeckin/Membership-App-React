@@ -11,7 +11,6 @@ export default function Members() {
   const [allUsers, setAllUsers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
-
   useEffect(()=> {
     fetchUsersFromDb()
   },[])
@@ -37,7 +36,6 @@ export default function Members() {
       </Typography>
     ))
   }
-console.log('members page rendered');
   function renderCards(){
    return allUsers?.map((user, index) => (
     <MemberCard  user={user} activeNav={activeNav} searchInput={searchInput}/> 

@@ -144,7 +144,7 @@ export default function EditBasicInfo() {
   const renderForm = () => (
         <MainInfoForm submitAction={updateUser}
         initialValues={initialValues} btnText={btnText} radioLabel={radioLabel} existingUserPeriod={user.period}
-        formHeader={'Üye Bilgileri'} remainingTime={renderRemainingTime}/>
+        formHeader={'Üye Bilgileri'} remainingTime={renderRemainingTime} alertText={'Üye başarıyla güncellendi'}/>
     )
 
     const renderModal =  ()=> (

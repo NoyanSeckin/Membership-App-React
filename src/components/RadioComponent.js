@@ -11,7 +11,7 @@ export default function RadioComponent({handleChange, value, label}) {
   const [isOther, setIsOther] = useState(false)
 
 
-  const closeOtherInput = () => isOther && setIsOther(false);
+  const closeOtherInput = () => setIsOther(false);
   const openOtherInput = () => setIsOther(true);
 
   return (
@@ -24,16 +24,16 @@ export default function RadioComponent({handleChange, value, label}) {
         id={isOther ? 'none' : 'period'}
         value={value}
         onChange={handleChange}
-      >
+        >
         <FormControlLabel value={'30'} control={<Radio />} label="1 Ay" 
         onClick={closeOtherInput}/>
         <FormControlLabel value={'90'} control={<Radio />} label="3 Ay" 
         onClick={closeOtherInput}/>
         <FormControlLabel
-        value='other' control={<Radio />} label="Diğer" onClick={openOtherInput} checked={isOther}/>
+        value='other' control={<Radio />} label="Diğer" onClick={openOtherInput} />
       </RadioGroup>
       <Box sx={{display: isOther ? 'inline' : 'none'}}>
-          <input style={{boxSizing: 'padding-box'}} type="number" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
+          <input value={Number(value) || 0} style={{boxSizing: 'padding-box'}} type="number" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
         </Box>
     </FormControl>
   );
