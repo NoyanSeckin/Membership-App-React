@@ -13,15 +13,6 @@ export default function Members() {
     fetchUsersFromDb()
   },[])
 
-  // function setUsers(){
-  //   if(sessionUsers !== null){
-  //     setAllUsers(sessionUsers);
-  //   } else{
-  //     fetchUsersFromDb();
-  //   }
-  // }
-
-
   async function fetchUsersFromDb(){
     const db = getFirestore();
     const membersRef = doc(db, 'Members', 'members');
@@ -51,15 +42,13 @@ export default function Members() {
   }
   return (
     <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
-      <Container maxWidth='xl' sx={{pt: 5}}>
-        <Paper sx={{p: 3, borderRadius: '8px'}}>
+      <Container maxWidth='xl' sx={{pt: 5,}}>
           <Box sx={{display: 'flex', gap: 3}}>
             {renderNavs()}
           </Box>
           <Box sx={{display: 'flex', mt: 3, flexWrap: 'wrap', gap: 3}}>
             {renderCards()}
-            </Box>
-        </Paper>
+          </Box>
       </Container>
     </Box>
   )

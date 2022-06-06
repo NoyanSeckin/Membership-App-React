@@ -71,7 +71,7 @@ export default function MemberCard({user, activeNav}) {
 
   function renderCardActions(remainingTime){
     return(
-      <CardActions>
+      <CardActions sx={{mt: -1.2}}>
         <Button onClick={()=> handleClick(remainingTime)}
         variant='outlined'
         sx={detailBtnStyle}> 

@@ -1,4 +1,4 @@
-import {Box, Button, Grid, Typography, Paper,} from '@mui/material'
+import {Box, Button, Typography} from '@mui/material'
 import {getFirestore, doc, updateDoc} from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import DetailsContext from '../contexts/DetailsContext'
 import React, {useContext, useState} from 'react'
 import MainInfoForm from './MainInfoForm'
 import Modal from './Modal'
-import { convertNumberToDate, renderEitherIcon,  renderBorderTopColor} from '../Utils'
+import { convertNumberToDate} from '../Utils'
 
 const errorBtnStyle = {
   bgcolor: 'danger.main',
@@ -31,15 +31,15 @@ const inputBtnStyle = {
   '&:hover': {bgcolor: 'primary.light'}
 }
 
-const leftGridPaperStyle = {
-  borderTop: '25px solid',
-  borderRadius: '8px',
-  display: 'flex', 
-  flexDirection: 'column', 
-  gap: 2, 
-  mt: 4, 
-  px: 6,
-  py: 3,
+const deleteBtnStyle = {
+  position: 'absolute',
+  right: '5px',
+  top: '-305px',
+  px: 2,
+  color: 'danger.main',
+  borderColor: 'danger.main',
+  fontSize: '16px',
+  '&:hover': {borderColor: 'danger.main'}
 }
 
 const remainingTimeContainer = {
@@ -77,8 +77,6 @@ export default function EditBasicInfo() {
     console.log(user.period);
     const notUpdatedUsers = sessionUsers.filter(localUser => localUser.id !== user.id);
     const updatedUsers = [...notUpdatedUsers, {...updatedUser, period: convertNumberToDate(updatedUser.period), id: user.id}]
-
-   
     setCorrectInput(updatedUser.period);
     // update detailsContext to display changes
     setDetailsContext({ 
@@ -92,8 +90,6 @@ export default function EditBasicInfo() {
       membersArray:  updatedUsers
     })
   }
-
-
   
   function handleCorrectInput(e){
     setCorrectInput(e.target.value);
@@ -118,95 +114,53 @@ export default function EditBasicInfo() {
   const btnText = 'Üye Bilgilerini Güncelle'
   const radioLabel = 'Üyelik süresi ekle'
 
-  function renderDetail(header, text){
-    return(
-      <Box>
-        <Typography variant='h6' sx={{fontWeight: '600'}}>{header}</Typography>
-        <Typography>{text || 'Belirtilmemiş'}</Typography>
-      </Box>
-    )
-  }
-
-  function genderToTurkish(gender){
-    return gender === 'male' ? 'Erkek' : 'Kadın';
-  }
-
-  const renderRemainingHeader = ()=> (
+  const renderRemainingHeader = () => (
     <Typography sx={{fontWeight: 600}} variant='h6'>Kalan Üyelik Süresi</Typography>
   )
 
-  function renderRemainingTime(){
-    if(isCorrect){
-      return(
-        <Box sx={remainingTimeContainer}>
-          {renderRemainingHeader()}
-          <input className='correct-input' type="number" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
-          <Button onClick={handleCorrect}
-          variant='contained' sx={{...correctBtnStyle, ...inputBtnStyle}}>Tamamla</Button>
-        </Box>
-      )
-    }
-    else
-    return(
-      <Box sx={remainingTimeContainer}>
-        {/* {renderDetail('Kalan Üyelik Süresi', } */}
-        {renderRemainingHeader()}
-        <Typography sx={{mt: 0.5}}>{user.period + ' gün'}</Typography>
-
-        
-        <Button onClick={()=> setIsCorrect(true)}
-        variant='contained' sx={correctBtnStyle}>Düzelt</Button>
-      </Box>
-    )
-  }
-
   const renderDeleteUserBtn = () =>(
-    <Button sx={errorBtnStyle} onClick={()=> setIsDeleteModal(true)}>
+    <Button variant='outlined' sx={{...deleteBtnStyle}} onClick={()=> setIsDeleteModal(true)}>
       Üyeyi Sil
     </Button>
   )
+    const renderCorrectInput = () => (
+      <>
+        <input className='correct-input' type="number" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
+        <Button onClick={handleCorrect}
+        variant='contained' sx={{...correctBtnStyle, ...inputBtnStyle}}>Tamamla</Button>
+      </>
+    )
 
-  function renderLeftGrid(){
-    return(
-      <Grid item md={6} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <Typography variant='h4' sx={{fontWeight: '600'}}>Üye Bilgileri</Typography>
-        <Paper elevation={5}
-        sx={{...leftGridPaperStyle, borderTopColor: renderBorderTopColor(user.period)}}>
-          
-          {renderEitherIcon(user.gender)}
-          {renderDetail('Ad-Soyad', user.name)}
-          {renderDetail('Telefon Numarası', user.phone)}
-          {renderDetail('Cinsiyet', genderToTurkish(user.gender))}
-          {renderRemainingTime()}
+    const renderRemainingTimeInfo = () => (
+      <>
+        <Typography sx={{mt: 0.5}}>{user.period + ' gün'}</Typography>
+        <Button onClick={()=> setIsCorrect(true)}
+        variant='contained' sx={correctBtnStyle}>Düzelt</Button>
+      </>
+    )
+
+  const renderRemainingTime = () => (
+        <Box sx={remainingTimeContainer}>
+          {renderRemainingHeader()}
+          {isCorrect ? renderCorrectInput() : renderRemainingTimeInfo()}
           {renderDeleteUserBtn()}
-        </Paper>
-      </Grid>
-    )
-  }
+        </Box>
+      )
 
-  function renderRightGrid(){
-    return(
-      <Grid item md={12}>
-        {<MainInfoForm submitAction={updateUser}
+  const renderForm = () => (
+        <MainInfoForm submitAction={updateUser}
         initialValues={initialValues} btnText={btnText} radioLabel={radioLabel} existingUserPeriod={user.period}
-        formHeader={'Üye Bilgileri'} remainingTime={renderRemainingTime}/>}
-      </Grid>
+        formHeader={'Üye Bilgileri'} remainingTime={renderRemainingTime}/>
     )
-  }
 
-  function renderGrid(){
-    return(
-      <Grid container>
-        {/* {renderLeftGrid()} */}
-        {renderRightGrid()}
-      </Grid>
-    )
-  }
-
-  return (
-     <>
-      {renderGrid()}
+    const renderModal =  ()=> (
       <Modal isModal={isDeleteModal} setIsModal={setIsDeleteModal} action={deleteUser}/>
+    )
+
+    return (
+     <>
+      {renderForm()}
+      {renderModal()}
      </>     
   )
 }
