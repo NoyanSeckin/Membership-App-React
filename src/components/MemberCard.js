@@ -91,6 +91,7 @@ export default function MemberCard({user, activeNav, searchInput}) {
     } else return true
   }
   
+  console.log('membercard rendered');
 
   function renderCard(){
     const remainingTime = calculateRemainingTime(user.period.seconds);

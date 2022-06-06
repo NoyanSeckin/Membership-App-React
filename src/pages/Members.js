@@ -37,7 +37,7 @@ export default function Members() {
       </Typography>
     ))
   }
-
+console.log('members page rendered');
   function renderCards(){
    return allUsers?.map((user, index) => (
     <MemberCard  user={user} activeNav={activeNav} searchInput={searchInput}/> 
