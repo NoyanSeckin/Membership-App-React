@@ -135,6 +135,8 @@ input[type=number] {
 	border: 1px solid #fff;
 	font-size: 16px;
 	width: 30px;
+	height: 0px;
+	padding-right: 0.2rem;
 }
 
 /* Sign in form */

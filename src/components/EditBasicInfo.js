@@ -20,9 +20,15 @@ const correctBtnStyle = {
   bgcolor: 'danger.main', 
   flexShrink: 1, 
   position: 'absolute',
-  right: 0,
+  left: '110px',
   py: 0,
-  top: '32px',
+  top: '35px',
+}
+
+const inputBtnStyle = {
+  bgcolor: 'primary.main', 
+  left: '92px',
+  '&:hover': {bgcolor: 'primary.light'}
 }
 
 const leftGridPaperStyle = {
@@ -34,6 +40,13 @@ const leftGridPaperStyle = {
   mt: 4, 
   px: 6,
   py: 3,
+}
+
+const remainingTimeContainer = {
+  position: 'relative', 
+  pl: 1, 
+  height: '50px',
+  mt: -1
 }
 
 export default function EditBasicInfo() {
@@ -118,23 +131,29 @@ export default function EditBasicInfo() {
     return gender === 'male' ? 'Erkek' : 'Kadın';
   }
 
+  const renderRemainingHeader = ()=> (
+    <Typography sx={{fontWeight: 600}} variant='h6'>Kalan Üyelik Süresi</Typography>
+  )
+
   function renderRemainingTime(){
     if(isCorrect){
       return(
-        <Box sx={{position: 'relative',}}>
-          <Typography variant='h6' sx={{fontWeight: 600}}>
-            Kalan Üyelik Süresi
-          </Typography>
+        <Box sx={remainingTimeContainer}>
+          {renderRemainingHeader()}
           <input className='correct-input' type="number" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
           <Button onClick={handleCorrect}
-          variant='contained' sx={{...correctBtnStyle, bgcolor: 'primary.main', '&:hover': {bgcolor: 'primary.light'}}}>Tamamla</Button>
+          variant='contained' sx={{...correctBtnStyle, ...inputBtnStyle}}>Tamamla</Button>
         </Box>
       )
     }
     else
     return(
-      <Box sx={{position: 'relative'}}>
-        {renderDetail('Kalan Üyelik Süresi', user.period + ' gün')}
+      <Box sx={remainingTimeContainer}>
+        {/* {renderDetail('Kalan Üyelik Süresi', } */}
+        {renderRemainingHeader()}
+        <Typography sx={{mt: 0.5}}>{user.period + ' gün'}</Typography>
+
+        
         <Button onClick={()=> setIsCorrect(true)}
         variant='contained' sx={correctBtnStyle}>Düzelt</Button>
       </Box>
@@ -167,9 +186,10 @@ export default function EditBasicInfo() {
 
   function renderRightGrid(){
     return(
-      <Grid item md={6}>
+      <Grid item md={12}>
         {<MainInfoForm submitAction={updateUser}
-        initialValues={initialValues} btnText={btnText} radioLabel={radioLabel} existingUserPeriod={user.period}/>}
+        initialValues={initialValues} btnText={btnText} radioLabel={radioLabel} existingUserPeriod={user.period}
+        formHeader={'Üye Bilgileri'} remainingTime={renderRemainingTime}/>}
       </Grid>
     )
   }
@@ -177,7 +197,7 @@ export default function EditBasicInfo() {
   function renderGrid(){
     return(
       <Grid container>
-        {renderLeftGrid()}
+        {/* {renderLeftGrid()} */}
         {renderRightGrid()}
       </Grid>
     )

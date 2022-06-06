@@ -10,7 +10,7 @@ const formContainerStyle = {
   borderRadius: '8px',
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 3,
   width: '55%',
   maxWidth: '500px',
   pt: 4,
@@ -23,7 +23,8 @@ const formStyle = {
   display: 'flex', 
   alignItems: 'center',
   flexDirection: 'column',
-  gap: '2rem'
+  gap: '2rem',
+  position: 'relative'
 }
 
 const submitBtnStyle = {
@@ -34,7 +35,7 @@ const submitBtnStyle = {
   mt: -1.3
 }
 
-export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod}) {
+export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod, remainingTime}) {
 
   const yupObject = {
     name: Yup.string().required('Ad-Soyad boş bırakılamaz'),
@@ -71,6 +72,7 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
       <Paper elevation={6} sx={formContainerStyle}>
         {renderInputs(values, errors, handleChange)}
         <SelectComponent value={values.gender} handleChange={handleChange} error={errors.gender}/>
+        {remainingTime()}
         <RadioComponent label={radioLabel} value={values.period} handleChange={handleChange}/>
         <Button variant='contained' type='submit' sx={submitBtnStyle}>
           {btnText}

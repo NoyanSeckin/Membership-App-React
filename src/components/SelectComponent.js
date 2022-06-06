@@ -13,9 +13,9 @@ export default function BasicSelect({handleChange, value, error}) {
   // };
 
   return (
-    <Box sx={{ minWidth: 120, height: '50px' }}>
+    <Box sx={{ minWidth: 120, height: '60px' }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Cinsiyet</InputLabel>
+        <InputLabel sx={{fontSize: '18px'}} id="demo-simple-select-label">Cinsiyet</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           name='gender'
@@ -23,6 +23,7 @@ export default function BasicSelect({handleChange, value, error}) {
           value={value}
           label="gender"
           onChange={handleChange}
+          sx={{fontSize: '19px'}}
         >
           <MenuItem value={'male'}>Erkek</MenuItem>
           <MenuItem value={'female'}>Kadın</MenuItem>
