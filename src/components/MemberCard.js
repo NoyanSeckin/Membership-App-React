@@ -31,7 +31,7 @@ const cardContentStyle = {
   flexDirection: 'column'
 }
 
-export default function MemberCard({user, activeNav}) {
+export default function MemberCard({user, activeNav, searchInput}) {
   const navigate = useNavigate();
 
 
@@ -85,10 +85,18 @@ export default function MemberCard({user, activeNav}) {
     return condition;
   }
 
+  function searchCondition(){
+    if(searchInput){
+      return  user.name.toLowerCase().includes(searchInput )  ?  true :  false;
+    } else return true
+  }
+  
+
   function renderCard(){
     const remainingTime = calculateRemainingTime(user.period.seconds);
     const condition = decideCondition(remainingTime);
-    return condition && (
+    const search = searchCondition(); 
+    return  search && condition && (
       <Card sx={{...cardStyle, borderTopColor: renderBorderTopColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         {renderCardContent(remainingTime)}

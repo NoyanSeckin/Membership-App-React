@@ -58,7 +58,10 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
       sx={{display: 'flex', flexDirection: 'column'}}>
         <label htmlFor={propName}>
           {propValue.label} 
-          <span className='form-warning-span'>{errors[propName]}</span>
+          <span className='form-warning-span'>{
+          errors[propName] &&
+          propName === 'phone' ? 'Yalnızca rakam giriniz.' : errors[propName]}
+          </span>
         </label>
         <input name={propName} placeholder={propValue.placeholder}
         type={propValue.type} id={propName} onChange={handleChange} value={values[propName]}/>

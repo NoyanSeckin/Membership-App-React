@@ -3,11 +3,14 @@ import {doc, getDoc, getFirestore} from 'firebase/firestore'
 
 import React, {useState, useEffect} from 'react'
 import MemberCard from '../components/MemberCard'
+import SearchWidget from '../components/SearchWidget'
 
 export default function Members() {
  
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
   const [allUsers, setAllUsers] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
 
   useEffect(()=> {
     fetchUsersFromDb()
@@ -37,7 +40,7 @@ export default function Members() {
 
   function renderCards(){
    return allUsers?.map((user, index) => (
-    <MemberCard  user={user} activeNav={activeNav} /> 
+    <MemberCard  user={user} activeNav={activeNav} searchInput={searchInput}/> 
    ))
   }
   return (
@@ -46,6 +49,7 @@ export default function Members() {
           <Box sx={{display: 'flex', gap: 3}}>
             {renderNavs()}
           </Box>
+          <SearchWidget input={searchInput} setInput={setSearchInput}/>
           <Box sx={{display: 'flex', mt: 3, flexWrap: 'wrap', gap: 3}}>
             {renderCards()}
           </Box>
