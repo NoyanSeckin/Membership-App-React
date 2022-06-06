@@ -103,14 +103,14 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
         Yup.object(yupObject)
       }
       onSubmit={(values, {resetForm})=> {
-        if(values.period === null) values.period = 0;
+        if(typeof values.period !== 'string') console.log('value is null');
         console.log(values.period);
         if(existingUserPeriod){
           // if values.period also selected add that to the  existing period
           const newValue = values.period ? Number(values.period) + existingUserPeriod : existingUserPeriod;
           console.log(values.period);
           submitAction({...values, period: newValue})
-        } else  submitAction(values);
+        } else  submitAction({...values, period: Number(values.period)});
         setIsAlert(true);
         isResetForm && resetForm();
        

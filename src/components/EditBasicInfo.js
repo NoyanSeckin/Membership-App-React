@@ -92,8 +92,8 @@ export default function EditBasicInfo() {
   function handleCorrect(){
     if(correctInput >= 0){
       const updatedUser = {...user, period: Number(correctInput)}
+      console.log(typeof Number(correctInput));
       setIsCorrect(false);
-      // change correctInput to date
       updateUser({...updatedUser, id: user.id})
     }
   }
@@ -119,7 +119,7 @@ export default function EditBasicInfo() {
   )
     const renderCorrectInput = () => (
       <>
-        <input className='correct-input' type="number" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
+        <input className='correct-input' type="text" value={correctInput} onChange={(e)=> handleCorrectInput(e)} />
         <Button onClick={handleCorrect}
         variant='contained' sx={{...correctBtnStyle, ...inputBtnStyle}}>Tamamla</Button>
       </>

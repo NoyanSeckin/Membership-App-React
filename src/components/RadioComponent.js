@@ -30,10 +30,10 @@ export default function RadioComponent({handleChange, value, label}) {
         <FormControlLabel value={'90'} control={<Radio />} label="3 Ay" 
         onClick={closeOtherInput}/>
         <FormControlLabel
-        value='other' control={<Radio />} label="Diğer" onClick={openOtherInput} />
+        value='' control={<Radio />} label="Diğer" onClick={openOtherInput} />
       </RadioGroup>
       <Box sx={{display: isOther ? 'inline' : 'none'}}>
-          <input value={Number(value) || 0} style={{boxSizing: 'padding-box'}} type="number" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
+          <input value={value} style={{boxSizing: 'padding-box'}} type="string" id={isOther ? 'period' : 'none'} onChange={handleChange}/>
         </Box>
     </FormControl>
   );
