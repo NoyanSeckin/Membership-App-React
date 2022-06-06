@@ -30,16 +30,17 @@ const submitBtnStyle = {
   color: '#fff',
   py: 1.3, 
   width: '100%', 
-  fontSize: '16px'
+  fontSize: '16px',
+  mt: -1.3
 }
 
 export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod}) {
 
   const yupObject = {
-    name: Yup.string().required(),
+    name: Yup.string().required('Ad-Soyad boş bırakılamaz'),
     phone: Yup.number(),
-    gender: Yup.string().required(),
-    // period: Yup.string().required()
+    gender: Yup.string().required('Lütfen cinsiyet seçiniz.'),
+    period: Yup.string()
   }
 
   const inputInfos = {
@@ -47,14 +48,17 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
     phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'number'},
   }
 
-  function renderInputs(values, handleChange){
+  function renderInputs(values, errors, handleChange){
     return Object.entries(inputInfos).map(info => {
       const propName = info.at(0);
       const propValue = info.at(1);
       return(
       <Box key={propName}
       sx={{display: 'flex', flexDirection: 'column'}}>
-        <label htmlFor={propName}>{propValue.label}</label>
+        <label htmlFor={propName}>
+          {propValue.label} 
+          <span className='form-warning-span'>{errors[propName]}</span>
+        </label>
         <input name={propName} placeholder={propValue.placeholder}
         type={propValue.type} id={propName} onChange={handleChange} value={values[propName]}/>
       </Box>
@@ -62,11 +66,11 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
    })
   }
 
-  function renderFormContent(values, handleChange){
+  function renderFormContent(values, errors, handleChange){
     return(
       <Paper elevation={6} sx={formContainerStyle}>
-        {renderInputs(values, handleChange)}
-        <SelectComponent value={values.gender} handleChange={handleChange}/>
+        {renderInputs(values, errors, handleChange)}
+        <SelectComponent value={values.gender} handleChange={handleChange} error={errors.gender}/>
         <RadioComponent label={radioLabel} value={values.period} handleChange={handleChange}/>
         <Button variant='contained' type='submit' sx={submitBtnStyle}>
           {btnText}
@@ -103,7 +107,7 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
         {({values, errors, handleSubmit, handleChange})=> (
           <form style={formStyle} onSubmit={handleSubmit}>
             {renderFormHeader()}
-            {renderFormContent(values, handleChange)}
+            {renderFormContent(values, errors, handleChange)}
           </form>
         )}
       </Formik>

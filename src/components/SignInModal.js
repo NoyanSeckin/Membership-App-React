@@ -51,27 +51,36 @@ export default function SignInModal({isModal, setIsModal, signInUser, renderAler
   
   const handleClose = () => setIsModal(false);
 
+  function renderInput(label, value, type, handleChange, ){
+    return(
+      <>
+          <label style={{display: 'block'}} htmlFor={type}>{label}</label>
+          <input className='sign-in-input' type={type} value={value} onChange={(e)=> handleChange(e)}/>
+      </>
+    )
+  }
+
+  const renderBtns = ()=> (
+       <Box sx={{display: 'flex'}}>
+        <Button sx={closeButton} onClick={handleClose}>Vazgeç</Button>
+        <Button onClick={()=> signInUser(email, password)} sx={loginButton}>Giriş</Button>
+      </Box>
+  ) 
+
   function renderForm(){
     return(
-      <form className='login' onSubmit={(e)=> e.preventDefault()}>
-      <label htmlFor="email" style={{display: 'block'}}>Email</label>
-      <input type="text" onChange={(e)=> handleEmail(e)}
-      value={email}/> 
-      <label htmlFor="password" style={{display: 'block'}}>Password</label>
-      <input type="password" onChange={(e)=> handlePassword(e)}
-      value={password}/> 
-      <Box sx={{display: 'flex'}}>
-      <Button sx={closeButton} onClick={handleClose}>Cancel</Button>
-      <Button onClick={()=> signInUser(email, password)} sx={loginButton}>Login</Button>
-      </Box>
-    </form>
+      <form onSubmit={(e)=> e.preventDefault()}>
+        {renderInput('Email', email, email, handleEmail)}
+        {renderInput('Şifre', password, 'password', handlePassword)}
+        {renderBtns()}
+     </form>
     )
   }
 
   function renderHeader(){
     return(
-      <Typography id="transition-modal-title" variant="h5" sx={{fontWeight: '700', fontSize: '25px', mb:1}}>
-        Admin Login
+      <Typography id="transition-modal-title" variant="h5" sx={{fontWeight: '700', fontSize: '25px', mb:3}}>
+        Admin Girişi 
       </Typography>
     )
   }

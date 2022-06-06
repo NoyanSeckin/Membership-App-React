@@ -38,17 +38,14 @@ export default function Home() {
   
   const {authContext} = useContext(AuthContext)
 
+  const alertObject = {text: 'Lütfen giriş yapın', type: 'error'}
   const [isAlert, setIsAlert] = useState(false);
-  const [alertObject, setAlertObject] = useState({})
-  const successText = 'Giriş başarılı'
-  const errorText = 'Lütfen giriş yapın'
 
   function handleNavigate(path) {
     if(authContext){
       navigate(path);
     } else {
       setIsAlert(true)
-      setAlertObject({...alertObject, text: errorText, type: 'error'})
     }
   }
 

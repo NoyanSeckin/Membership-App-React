@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect({handleChange, value}) {
+export default function BasicSelect({handleChange, value, error}) {
   // const [gender, setGender] = React.useState('');
 
   // const handleChange = (event) => {
@@ -13,7 +13,7 @@ export default function BasicSelect({handleChange, value}) {
   // };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 120, height: '50px' }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Cinsiyet</InputLabel>
         <Select
@@ -28,6 +28,7 @@ export default function BasicSelect({handleChange, value}) {
           <MenuItem value={'female'}>Kadın</MenuItem>
         </Select>
       </FormControl>
+      <span style={{marginTop: '0.4rem'}} className='form-warning-span'>{error}</span>
     </Box>
   );
 }

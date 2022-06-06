@@ -71,6 +71,14 @@ input:focus{
 	color: #F77474;
 }
 
+.form-warning-span{
+	color: #f44336 ;
+	display: inline-block;
+	margin-left: 0.5rem;
+	font-size: 17px;
+	font-weight: 400!important;
+}
+
 textarea{
 	background-color: #F4F4F4;
 	border-radius: 8px;
@@ -127,4 +135,12 @@ input[type=number] {
 	border: 1px solid #fff;
 	font-size: 16px;
 	width: 30px;
+}
+
+/* Sign in form */
+
+.sign-in-input{
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 1rem;
 }

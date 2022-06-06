@@ -19,7 +19,7 @@ export default function AlertComponent({isAlert, setIsAlert, alertText, alertTyp
     mr: 3,
     py: 1.3,
     right: '-20px',
-    top: '85px',
+    top: '75px',
     width: '321px',
     ...customStyle
      
