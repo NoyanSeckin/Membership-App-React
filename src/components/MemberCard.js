@@ -10,9 +10,11 @@ const headerStyle = {
 }
 
 const cardStyle ={
-  borderTop: '25px solid',
-  minWidth: '240px',
-  borderRadius: '8px'
+  borderTop: '30px solid',
+  minWidth: '228px',
+  borderRadius: '8px',
+  px: {xs: 2, md: 0},
+  py: {xs: 1, md: 0}
 }
 
 const detailBtnStyle = {

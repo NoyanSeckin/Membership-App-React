@@ -8,7 +8,7 @@ import {convertNumberToDate} from '../Utils'
 
 const containerStyle = {
   bgcolor: 'mainBg', 
-  minHeight: '120vh'
+  minHeight: {xs: '110vh', md: '120vh'},
 }
 
 export default function NewMember() {

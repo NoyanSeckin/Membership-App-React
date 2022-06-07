@@ -52,7 +52,9 @@ a {
 	background-color: #F4F4F4;
 	border-radius: 8px;
 	border: 1px solid #000;
-	width: 250px;
+	width: 100%;
+	max-width: 400px;
+	box-sizing: border-box;
 	padding: 0.5rem 0.5rem;
 	font-size: 17px;
 }
@@ -85,6 +87,7 @@ input:focus{
 	margin-left: 0.5rem;
 	font-size: 17px;
 	font-weight: 400!important;
+	margin-left: -1px;
 }
 
 textarea{
@@ -154,3 +157,10 @@ input[type=number] {
 	box-sizing: border-box;
 	margin-bottom: 1rem;
 }
+
+/* @media screen and (max-width: 900px) {
+	.search-input{
+		width: 100%;
+		max-width: 400px;
+	}
+} */

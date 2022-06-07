@@ -26,7 +26,7 @@ const gridItemStyle = {
   display: 'flex', 
   flexDirection: 'column', 
   alignItems: 'center',
-  gap: 3
+  gap: 3,
 }
 
 const iconStyle = {
@@ -51,7 +51,7 @@ export default function Home() {
 
   function renderLeftGrid(){
     return(
-      <Grid item md={6} sx={gridItemStyle}>
+      <Grid item md={6} xs={12} sx={gridItemStyle}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Mevcut Üyeleri Gör
         </Typography>
@@ -65,7 +65,7 @@ export default function Home() {
 
   function renderRightGrid(){
     return(
-      <Grid item md={6} sx={gridItemStyle}>
+      <Grid item md={6} xs={12} sx={{...gridItemStyle, mt: {xs: 4, md: 0}}}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>
           Yeni Üye Ekle
         </Typography>
@@ -79,18 +79,22 @@ export default function Home() {
 
   function renderGrid(){
     return(
-      <Grid container sx={{pt: 10}}>
+      <Grid container sx={{pt: {xs: 3, md: 10}}}>
         {renderLeftGrid()}
         {renderRightGrid()}
       </Grid>
     )
   }
 
+  const renderAlert = ()=> (
+    <AlertComponent isAlert={isAlert} setIsAlert={setIsAlert} alertText={alertObject.text} alertType={alertObject.type}/>
+  )
+
   return (
-    <Box sx={{bgcolor: 'mainBg', minHeight: '100vh'}}>
+    <Box sx={{bgcolor: 'mainBg', minHeight: '100vh', pb: {xs: 4, md: 0}}}>
       <Container maxWidth='xl'>
       {renderGrid()}
-      <AlertComponent isAlert={isAlert} setIsAlert={setIsAlert} alertText={alertObject.text} alertType={alertObject.type}/>
+      {renderAlert()}
     </Container>
     </Box>
   )

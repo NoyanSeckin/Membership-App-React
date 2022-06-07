@@ -19,7 +19,7 @@ const style = {
   py: 2,
   top: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '355px',
+  width: {xs: '310px', md: '355px'},
   zIndex: 3,
 };
 

@@ -12,7 +12,7 @@ const formContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: 3,
-  width: '55%',
+  width: {xs: '88%', md: '55%'},
   maxWidth: '500px',
   pt: 4,
   pb: 2,
@@ -25,7 +25,7 @@ const formStyle = {
   alignItems: 'center',
   flexDirection: 'column',
   gap: '2rem',
-  position: 'relative'
+  position: 'relative',
 }
 
 const submitBtnStyle = {
@@ -58,16 +58,16 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
       const propValue = info.at(1);
       return(
       <Box key={propName}
-      sx={{display: 'flex', flexDirection: 'column'}}>
+      sx={{display: 'flex', flexDirection: 'column', height: '80px'}}>
         <label htmlFor={propName}>
           {propValue.label} 
-          <span className='form-warning-span'>{
-          errors[propName] &&
-          propName === 'phone' ? 'Yalnızca rakam giriniz.' : errors[propName]}
-          </span>
         </label>
         <input name={propName} placeholder={propValue.placeholder}
         type={propValue.type} id={propName} onChange={handleChange} value={values[propName]}/>
+        <span className='form-warning-span'>{
+          errors[propName] &&
+          propName === 'phone' ? 'Yalnızca rakam giriniz.' : errors[propName]}
+          </span>
       </Box>
       )
    })
@@ -103,12 +103,9 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
         Yup.object(yupObject)
       }
       onSubmit={(values, {resetForm})=> {
-        if(typeof values.period !== 'string') console.log('value is null');
-        console.log(values.period);
         if(existingUserPeriod){
           // if values.period also selected add that to the  existing period
           const newValue = values.period ? Number(values.period) + existingUserPeriod : existingUserPeriod;
-          console.log(values.period);
           submitAction({...values, period: newValue})
         } else  submitAction({...values, period: Number(values.period)});
         setIsAlert(true);

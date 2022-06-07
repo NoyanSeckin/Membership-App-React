@@ -5,6 +5,20 @@ import React, {useState, useEffect} from 'react'
 import MemberCard from '../components/MemberCard'
 import SearchWidget from '../components/SearchWidget'
 
+const navStyle = {
+  fontWeight: '700', 
+  fontSize: {xs: '0.9rem', md: '1.5rem'},
+  '&:hover': {cursor: 'pointer'},
+}
+
+const cardsContainer = {
+  display: 'flex', 
+  mt: 3, 
+  flexWrap: 'wrap', 
+  gap: 3,
+  justifyContent: {xs: 'center', md: 'start'}
+}
+
 export default function Members() {
  
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
@@ -31,7 +45,7 @@ export default function Members() {
     return navs.map(nav => (
       <Typography variant='h5' onClick={()=> setActiveNav(nav)}
       className={nav === activeNav && 'active-nav'}
-      sx={{fontWeight: '700', '&:hover': {cursor: 'pointer'}}}>
+      sx={navStyle}>
         {nav}
       </Typography>
     ))
@@ -48,7 +62,7 @@ export default function Members() {
             {renderNavs()}
           </Box>
           <SearchWidget input={searchInput} setInput={setSearchInput}/>
-          <Box sx={{display: 'flex', mt: 3, flexWrap: 'wrap', gap: 3}}>
+          <Box sx={cardsContainer}>
             {renderCards()}
           </Box>
       </Container>

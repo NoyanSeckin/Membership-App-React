@@ -102,7 +102,7 @@ export default function EditBasicInfo() {
     name: user.name,
     phone: user.phone,
     gender: user.gender,
-    period: ''
+    period: undefined
   }
 
   const btnText = 'Üye Bilgilerini Güncelle'

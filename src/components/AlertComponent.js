@@ -14,23 +14,16 @@ export default function AlertComponent({isAlert, setIsAlert, alertText, alertTyp
     boxShadow:' 0px 3px 12px #1E36482E',
     color: returnEither('#fff', '#46af32'),
     fontSize: '16px',
-    position: 'absolute',
+    position:{xs:  'fixed', md: 'absolute'},
     zIndex: 5,
     mr: 3,
     py: 1.3,
-    right: '-20px',
-    top: '75px',
-    width: '321px',
+    left: {xs: '0', md: 'auto'},
+    mx: {xs: 'auto', md: 0},
+    right: {xs: '0', md: '5px'},
+    top: {xs: '55px', md: '75px'},
+    width: {xs: '260px', md: '321px'},
     ...customStyle
-     
-  }
-
-
-  const mobileStyle = {
-    left: '10px',
-    padding: '0.6rem 0.7rem',
-    top: '81px',
-    width: '89%',
   }
   
   function handleClose(){
