@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "steel-membership",
+    "produiction": "steel-membership",
+    "production": "steel-membership"
+  },
+  "targets": {}
+}

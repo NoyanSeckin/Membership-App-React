@@ -52,31 +52,24 @@ export default function MainInfoForm({initialValues, formHeader, btnText, radioL
     phone: {label: 'Telefon', placeholder: 'Telefon giriniz', type: 'text'},
   }
 
-  function renderInputs(values, errors, handleChange){
-    return Object.entries(inputInfos).map(info => {
-      const propName = info.at(0);
-      const propValue = info.at(1);
-      return(
-      <Box key={propName}
-      sx={{display: 'flex', flexDirection: 'column', height: '80px'}}>
-        <label htmlFor={propName}>
-          {propValue.label} 
-        </label>
-        <input name={propName} placeholder={propValue.placeholder}
-        type={propValue.type} id={propName} onChange={handleChange} value={values[propName]}/>
-        <span className='form-warning-span'>{
-          errors[propName] &&
-          propName === 'phone' ? 'Yalnızca rakam giriniz.' : errors[propName]}
-          </span>
-      </Box>
-      )
-   })
-  }
+const renderInput = (name, value, error, handleChange, customError) => (
+  <Box sx={{display: 'flex', flexDirection: 'column', height: '80px'}}>
+    <label htmlFor={name}>
+        {inputInfos[name].label}
+    </label>
+    <input type="text" placeholder={inputInfos[name].placeholder} name={name} id={name} onChange={handleChange} 
+    value={value}/>
+    <span className='form-warning-span'>
+      {error && (customError ||  error)}
+    </span>
+  </Box>
+)
 
   function renderFormContent(values, errors, handleChange){
     return(
       <Paper elevation={6} sx={formContainerStyle}>
-        {renderInputs(values, errors, handleChange)}
+        {renderInput('name', values.name, errors.name, handleChange)}
+        {renderInput('phone', values.phone, errors.phone, handleChange, 'Yalnızca rakam giriniz.')}
         <SelectComponent value={values.gender} handleChange={handleChange} error={errors.gender}/>
         {remainingTime && remainingTime()}
         <RadioComponent label={radioLabel} value={values.period} handleChange={handleChange}/>

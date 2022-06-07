@@ -78,6 +78,8 @@ export default function Navbar() {
 
   async function signOutUser(){
     signOut(auth);
+    setAlertObject({type: 'success', text: 'Çıkış başarılı!'})
+    setIsAlert(true);
   }
 
   const renderAuthBtn = () => (
@@ -97,10 +99,14 @@ export default function Navbar() {
       customStyle={
         alertObject.type === 'error' 
         &&
-        {right: '-23px', top: '-65px', width: '355px'} 
+        {right: '0px', top: '-65px', width: {xs: '310px', md: '355px'}} 
       }/>
       )
     }
+
+    const renderSignInModal = () => (
+      <SignInModal isModal={isSignInModal} setIsModal={setIsSignInModal} signInUser={signInUser} authContext={authContext} renderAlert={alertObject.type === 'error' && renderAlert}/>
+    )
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -118,8 +124,8 @@ export default function Navbar() {
         </Toolbar>
         </Container>
       </AppBar>
-      <SignInModal isModal={isSignInModal} setIsModal={setIsSignInModal} signInUser={signInUser} authContext={authContext} renderAlert={alertObject.type === 'error' && renderAlert}/>
-      {renderAlert()}
+     {renderSignInModal()}
+     {renderAlert()}
     </Box>
   );
 }

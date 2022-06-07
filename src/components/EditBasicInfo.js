@@ -92,7 +92,6 @@ export default function EditBasicInfo() {
   function handleCorrect(){
     if(correctInput >= 0){
       const updatedUser = {...user, period: Number(correctInput)}
-      console.log(typeof Number(correctInput));
       setIsCorrect(false);
       updateUser({...updatedUser, id: user.id})
     }

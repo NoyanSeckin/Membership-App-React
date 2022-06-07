@@ -3,14 +3,14 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCAtWQRLj5GLu6F0e9ex-DMhLz2HBFS1SA",
-  authDomain: "steel-membership-app.firebaseapp.com",
-  projectId: "steel-membership-app",
-  storageBucket: "steel-membership-app.appspot.com",
-  messagingSenderId: "158745713285",
-  appId: "1:158745713285:web:19150944933aefc87ea7ec"
+
+  apiKey: "AIzaSyAz3Ua-IVord--r3dNTFtuyJfrIwdnSh2E",
+  authDomain: "steel-membership.firebaseapp.com",
+  projectId: "steel-membership",
+  storageBucket: "steel-membership.appspot.com",
+  messagingSenderId: "198640436477",
+  appId: "1:198640436477:web:feb6158bc3273822ea6a94"
 };
 
 // Initialize Firebase
