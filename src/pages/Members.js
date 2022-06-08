@@ -23,7 +23,6 @@ export default function Members() {
  
   const [activeNav, setActiveNav] = useState('Tüm Üyeler');
   const [allUsers, setAllUsers] = useState([]);
-  const [displayedUsers, setDisplayedUsers] = useState([])
   const [searchInput, setSearchInput] = useState("");
   
   useEffect(()=> {
@@ -68,26 +67,20 @@ export default function Members() {
     } else return true
   }
 
-  // return allUsers?.map((user, index) => {
-  //   const remainingTime = calculateRemainingTime(user.period.seconds);
-  //   const isCondition = decideCondition(remainingTime)
-  //   const isSearch = searchCondition(user.name);
-  //   if(isSearch && isCondition){
-  //      return ( 
-  //      <MemberCard  user={user} activeNav={activeNav} searchInput={searchInput} remainingTime={remainingTime}/> )
-  //   } else return false
-  // }
-  
-
-  function renderCards(){
-   return allUsers?.map((user, index) => {
+  const  renderCards = () => (
+    allUsers?.map((user, index) => {
      const remainingTime = calculateRemainingTime(user.period.seconds)
       return ( 
         searchCondition(user.name) && decideCondition(remainingTime)  &&
       <MemberCard  user={user}  remainingTime={remainingTime}/> )
    }
    )
-  }
+  )
+  const renderTotalUsers = () => (
+    <Typography sx={{mt: 2, fontSize: '17px'}}>
+        Toplam üye sayısı:  {renderCards().filter(val => val !== false).length}
+    </Typography>
+  )
   return (
     <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
       <Container maxWidth='xl' sx={{pt: 5,}}>
@@ -95,7 +88,7 @@ export default function Members() {
             {renderNavs()}
           </Box>
           <SearchWidget input={searchInput} setInput={setSearchInput}/>
-          {renderCards().length}
+          {renderTotalUsers()}
           <Box sx={cardsContainer}>
             {renderCards()}
           </Box>
