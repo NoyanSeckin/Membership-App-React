@@ -89,7 +89,7 @@ export default function MemberCard({user, activeNav, searchInput}) {
 
   function searchCondition(){
     if(searchInput){
-      return  user.name.toLowerCase().includes(searchInput )  ?  true :  false;
+      return  user.name.toLowerCase().includes(searchInput.toLowerCase() )  ?  true :  false;
     } else return true
   }
   
