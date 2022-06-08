@@ -33,7 +33,7 @@ const cardContentStyle = {
   flexDirection: 'column'
 }
 
-export default function MemberCard({user, activeNav, searchInput}) {
+export default function MemberCard({user, remainingTime}) {
   const navigate = useNavigate();
 
 
@@ -77,36 +77,14 @@ export default function MemberCard({user, activeNav, searchInput}) {
     )
   }
 
-  function decideCondition(remainingTime){
-    let condition;
-    if(activeNav === 'Tüm Üyeler'){
-      condition = true;
-    } else if (activeNav === 'Aktif Üyeler'){
-      condition = remainingTime > 0;
-    } else condition = remainingTime <= 0;
-    return condition;
-  }
-
-  function searchCondition(){
-    if(searchInput){
-      return  user.name.toLowerCase().includes(searchInput.toLowerCase() )  ?  true :  false;
-    } else return true
-  }
-  
-
-  function renderCard(){
-    const remainingTime = calculateRemainingTime(user.period.seconds);
-    const condition = decideCondition(remainingTime);
-    const search = searchCondition(); 
-    return  search && condition && (
+  const  renderCard = () => (
       <Card sx={{...cardStyle, borderTopColor: renderBorderTopColor(remainingTime)}}>
         {renderEitherIcon(user.gender)}
         {renderCardContent(remainingTime)}
         {renderCardActions(remainingTime)}
       </Card>
     )
-  }
-
+  
   return (
     <>
       {renderCard()}
