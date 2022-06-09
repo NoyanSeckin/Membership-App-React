@@ -5,9 +5,10 @@ import React, {useState, useEffect} from 'react'
 import MemberCard from '../components/MemberCard'
 import SearchWidget from '../components/SearchWidget'
 import { calculateRemainingTime } from '../Utils'
+
 const navStyle = {
   fontWeight: '700', 
-  fontSize: {xs: '0.9rem', sm: '1.2rem', md: '1.5rem'},
+  fontSize: {xs: '0.9rem', sm: '1.2rem', md: '1.4rem'},
   '&:hover': {cursor: 'pointer'},
 }
 
@@ -77,7 +78,7 @@ export default function Members() {
    )
   )
   const renderTotalUsers = () => (
-    <Typography sx={{mt: 2, fontSize: '17px'}}>
+    <Typography sx={{mt: 2, fontSize: {xs: '0.9rem', md: '17px'}}}>
         Toplam üye sayısı:  {renderCards().filter(val => val !== false).length}
     </Typography>
   )
