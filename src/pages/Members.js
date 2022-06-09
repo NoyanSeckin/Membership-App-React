@@ -82,7 +82,7 @@ export default function Members() {
     </Typography>
   )
   return (
-    <Box sx={{bgcolor: 'mainBg', minHeight: '120vh'}}>
+    <Box sx={{bgcolor: 'mainBg', minHeight: '120vh', pb: 3}}>
       <Container maxWidth='xl' sx={{pt: 5,}}>
           <Box sx={{display: 'flex', gap: 3}}>
             {renderNavs()}

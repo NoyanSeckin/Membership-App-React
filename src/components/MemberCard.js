@@ -2,7 +2,7 @@ import {Button, Card, CardActions, CardContent, Typography} from '@mui/material'
 
 import { useNavigate } from 'react-router-dom';
 
-import { renderEitherIcon, calculateRemainingTime, renderBorderTopColor } from '../Utils';
+import { renderEitherIcon, renderBorderTopColor } from '../Utils';
 import React from 'react'
 
 const headerStyle = {
@@ -37,6 +37,7 @@ export default function MemberCard({user, remainingTime}) {
   const navigate = useNavigate();
 
 
+  // set userdetail and navigate to userdetail page
   function handleClick(remainingTime){
   const userDetail = {...user, period: remainingTime};
   sessionStorage.setItem('user-detail', JSON.stringify(userDetail))

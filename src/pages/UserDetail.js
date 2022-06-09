@@ -1,4 +1,4 @@
-import {Box, Container, Paper} from '@mui/material'
+import {Box, Container} from '@mui/material'
 
 import React from 'react'
 import EditBasicInfo from '../components/EditBasicInfo'

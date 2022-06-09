@@ -93,7 +93,7 @@ export default function EditBasicInfo() {
     if(correctInput >= 0){
       const updatedUser = {...user, period: Number(correctInput)}
       setIsCorrect(false);
-      updateUser({...updatedUser, id: user.id})
+      sessionStorage.setItem('user-detail', JSON.stringify(updatedUser))
     }
   }
 

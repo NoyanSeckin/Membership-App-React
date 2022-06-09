@@ -33,7 +33,7 @@ const submitBtnStyle = {
   py: 1.3, 
   width: '100%', 
   fontSize: '16px',
-  mt: -1.3
+  mt: -1.3,
 }
 
 export default function MainInfoForm({initialValues, formHeader, btnText, radioLabel, submitAction, existingUserPeriod, remainingTime, alertText, isResetForm}) {
@@ -102,7 +102,7 @@ const renderInput = (name, value, error, handleChange, customError) => (
           submitAction({...values, period: newValue})
         } else  submitAction({...values, period: Number(values.period)});
         setIsAlert(true);
-        isResetForm && resetForm();
+       isResetForm && resetForm()
        
       }}>
         {({values, errors, handleSubmit, handleChange})=> (
