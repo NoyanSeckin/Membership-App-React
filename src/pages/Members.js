@@ -68,7 +68,7 @@ export default function Members() {
   }
 
   const  renderCards = () => (
-    allUsers?.map((user, index) => {
+    allUsers?.map((user) => {
      const remainingTime = calculateRemainingTime(user.period.seconds)
       return ( 
         searchCondition(user.name) && decideCondition(remainingTime)  &&

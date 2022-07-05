@@ -1,8 +1,9 @@
 {
   "projects": {
-    "default": "steel-membership",
+    "default": "gym-membership-01",
     "produiction": "steel-membership",
-    "production": "steel-membership"
+    "production": "steel-membership",
+    "staging": "gym-membership-01"
   },
   "targets": {}
 }

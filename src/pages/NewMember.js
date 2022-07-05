@@ -1,6 +1,6 @@
 import {Box, Container} from '@mui/material'
 import { v4 as uuidv4 } from 'uuid';
-import {app} from '../firebase/init' 
+
 import {doc, updateDoc, getFirestore, arrayUnion} from 'firebase/firestore'
 import React from 'react'
 import MainInfoForm from '../components/MainInfoForm'
@@ -18,6 +18,7 @@ export default function NewMember() {
     const membersRef = doc(db, 'Members', 'members')
     const userObject = {...values, id: uuidv4()};
     userObject.period = convertNumberToDate(userObject.period)
+
     updateDoc(membersRef, {
       membersArray: arrayUnion(userObject)
     })

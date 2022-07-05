@@ -4,16 +4,15 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-
-  apiKey: "AIzaSyAz3Ua-IVord--r3dNTFtuyJfrIwdnSh2E",
-  authDomain: "steel-membership.firebaseapp.com",
-  projectId: "steel-membership",
-  storageBucket: "steel-membership.appspot.com",
-  messagingSenderId: "198640436477",
-  appId: "1:198640436477:web:feb6158bc3273822ea6a94"
+  apiKey: "AIzaSyAMzIK2m53I8IEATC1dZr3x_ZZ1nxNU-G4",
+  authDomain: "gym-membership-01.firebaseapp.com",
+  projectId: "gym-membership-01",
+  storageBucket: "gym-membership-01.appspot.com",
+  messagingSenderId: "779251712225",
+  appId: "1:779251712225:web:1db0f0844eaf0ba026b7a0"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export default app; 
+export default app;
